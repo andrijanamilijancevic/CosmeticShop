@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <a routerLink="/" class="navbar-brand">
+       GlamShop
+    </a>
+
+    <ul class="navbar-links">
+      <li><a routerLink="/products" routerLinkActive="active">Proizvodi</a></li>
+      <li><a routerLink="/beauty-quiz" routerLinkActive="active">✨ Beauty Quiz</a></li>
+      <li><a routerLink="/shade-finder" routerLinkActive="active">🎨 Shade Finder</a></li>
+      <ng-container *ngIf="!(isLoggedIn$ | async)">
+        <li><a routerLink="/login" routerLinkActive="active">Prijava</a></li>
+        <li><a routerLink="/register" class="btn-primary">Registracija</a></li>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggedIn$ | async">
+        <ng-container *ngIf="!(isAdmin$ | async)">
+          <li><a routerLink="/cart" routerLinkActive="active"> Korpa <span class="cart-badge" *ngIf="cartCount > 0">{{cartCount}}</span></a></li>
+          <li><a routerLink="/wishlist" routerLinkActive="active">♡ Wish Lista</a></li>
+          <li><a routerLink="/profile" routerLinkActive="active">Profil</a></li>
+        </ng-container>
+
+        <ng-container *ngIf="isAdmin$ | async">
+          <li><a routerLink="/admin" routerLinkActive="active"> Admin</a></li>
+        </ng-container>
+
+        <li><a (click)="logout()" class="btn-secondary" style="cursor:pointer">Odjava</a></li>
+      </ng-container>
+    </ul>
+  </div>
+</nav>

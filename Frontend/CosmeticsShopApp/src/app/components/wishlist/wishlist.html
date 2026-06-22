@@ -1,0 +1,31 @@
+<div class="wishlist-page">
+  <div class="container">
+    <h2 class="page-title">♡ Moja Wish Lista</h2>
+
+    <div class="loading" *ngIf="loading">Učitavanje...</div>
+
+    <div class="empty-wishlist" *ngIf="!loading && items.length === 0">
+      <p>😔 Vaša wish lista je prazna.</p>
+      <a routerLink="/products" class="btn-primary">Istraži proizvode</a>
+    </div>
+
+    <div class="wishlist-grid" *ngIf="!loading && items.length > 0">
+      <div class="product-card" *ngFor="let item of items">
+        <div class="product-image">
+          <img [src]="item.imageUrl || 'assets/placeholder.png'" [alt]="item.name"/>
+          <button class="remove-btn" (click)="removeFromWishlist(item.id)" title="Ukloni">♡</button>
+        </div>
+        <div class="product-info">
+          <span class="product-category">{{ item.categoryName }}</span>
+          <h3>{{ item.name }}</h3>
+          <span class="product-brand">{{ item.brand }}</span>
+          <div class="product-footer">
+            <span class="product-price">{{ item.price | number }} RSD</span>
+            <button class="btn-primary add-btn" (click)="addToCart(item)">+ Korpa</button>
+          </div>
+        </div>
+        <a [routerLink]="['/products', item.id]" class="product-link"></a>
+      </div>
+    </div>
+  </div>
+</div>

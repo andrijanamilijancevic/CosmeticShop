@@ -1,0 +1,123 @@
+.hero {
+  padding: 80px 0;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: var(--dark-pink);
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+  color: var(--text-light);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-blob {
+  font-size: 12rem;
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.features {
+  padding: 60px 0;
+  background: white;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 32px 20px;
+  border-radius: var(--border-radius);
+  background: var(--bg-pink);
+  transition: var(--transition);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.feature-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--dark-pink);
+}
+
+.categories {
+  padding: 60px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--dark-pink);
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 20px;
+  background: white;
+  border-radius: var(--border-radius);
+  border: 2px solid transparent;
+  transition: var(--transition);
+  font-weight: 600;
+  color: var(--text-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.category-card:hover {
+  border-color: var(--dark-pink);
+  color: var(--dark-pink);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.category-icon {
+  font-size: 2.5rem;
+}

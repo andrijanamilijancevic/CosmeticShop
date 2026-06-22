@@ -1,0 +1,71 @@
+<div class="profile-page">
+  <div class="container">
+    <h2 class="page-title">👤 Moj profil</h2>
+
+    <div class="profile-grid">
+      <!-- Leva kolona - info -->
+      <div class="profile-card">
+        <div class="profile-avatar">
+          {{ initials }}
+        </div>
+        <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
+        <p class="profile-email">{{ user?.email }}</p>
+        <span class="role-badge">{{ user?.role }}</span>
+
+        <div class="profile-form">
+          <h4>Izmeni profil</h4>
+          <div class="form-group">
+            <label>Ime</label>
+            <input [(ngModel)]="editForm.firstName" type="text"/>
+          </div>
+          <div class="form-group">
+            <label>Prezime</label>
+            <input [(ngModel)]="editForm.lastName" type="text"/>
+          </div>
+          <button class="btn-primary" (click)="updateProfile()">Sačuvaj</button>
+        </div>
+
+        <div class="profile-form">
+          <h4>Promeni lozinku</h4>
+          <div class="form-group">
+            <label>Stara lozinka</label>
+            <input [(ngModel)]="passwordForm.oldPassword" type="password"/>
+          </div>
+          <div class="form-group">
+            <label>Nova lozinka</label>
+            <input [(ngModel)]="passwordForm.newPassword" type="password"/>
+          </div>
+          <button class="btn-secondary" (click)="changePassword()">Promeni lozinku</button>
+        </div>
+
+        <div class="toast-inline" *ngIf="toastMsg">{{ toastMsg }}</div>
+      </div>
+
+      <!-- Desna kolona - porudžbine -->
+      <div class="orders-section">
+        <h3>📦 Moje porudžbine</h3>
+
+        <div class="order-card" *ngFor="let order of orders">
+          <div class="order-header">
+            <span class="order-id">#{{ order.id }}</span>
+            <span class="status-badge" [class]="order.status.toLowerCase()">{{ order.status }}</span>
+            <span class="order-date">{{ order.createdAt | date:'dd.MM.yyyy' }}</span>
+          </div>
+          <div class="order-items">
+            <div *ngFor="let item of order.items" class="order-item">
+              {{ item.productName }} x{{ item.quantity }} — {{ item.totalPrice | number }} RSD
+            </div>
+          </div>
+          <div class="order-total">
+            Ukupno: <strong>{{ order.totalAmount | number }} RSD</strong>
+          </div>
+        </div>
+
+        <div class="empty" *ngIf="orders.length === 0">
+          <p>😔 Nemate porudžbina.</p>
+          <a routerLink="/products" class="btn-primary">Istraži proizvode</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

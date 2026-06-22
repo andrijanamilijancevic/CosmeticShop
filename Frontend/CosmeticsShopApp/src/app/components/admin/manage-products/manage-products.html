@@ -1,0 +1,116 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <h3>⚙️ Admin Panel</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/products" routerLinkActive="active">💄 Proizvodi</a>
+      <a routerLink="/admin/orders" routerLinkActive="active">📦 Porudžbine</a>
+      <a routerLink="/admin/users" routerLinkActive="active">👥 Korisnici</a>
+      <a routerLink="/admin/transactions" routerLinkActive="active">💳 Transakcije</a>
+    </nav>
+    <a routerLink="/" class="back-btn">← Nazad na shop</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <h2>💄 Upravljanje proizvodima</h2>
+      <button class="btn-primary" (click)="openForm()">+ Novi proizvod</button>
+    </div>
+
+    <!-- Forma za dodavanje/izmenu -->
+    <div class="product-form glass" *ngIf="showForm">
+      <h3>{{ editingId ? 'Izmeni proizvod' : 'Novi proizvod' }}</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Naziv</label>
+          <input [(ngModel)]="form.name" placeholder="Naziv proizvoda"/>
+        </div>
+        <div class="form-group">
+          <label>Brend</label>
+          <input [(ngModel)]="form.brand" placeholder="Brend"/>
+        </div>
+        <div class="form-group">
+          <label>Cena (RSD)</label>
+          <input type="number" [(ngModel)]="form.price" placeholder="0"/>
+        </div>
+        <div class="form-group">
+          <label>Stanje na lageru</label>
+          <input type="number" [(ngModel)]="form.stockQuantity" placeholder="0"/>
+        </div>
+        <div class="form-group">
+          <label>Kategorija</label>
+          <select [(ngModel)]="form.categoryId">
+            <option value="">Izaberi kategoriju</option>
+            <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+  <label>Slika proizvoda</label>
+  <div class="image-upload-area" (click)="fileInput.click()">
+    <img *ngIf="imagePreview" [src]="imagePreview" class="image-preview"/>
+    <div *ngIf="!imagePreview" class="upload-placeholder">
+      <span>📸</span>
+      <p>Kliknite da izaberete sliku</p>
+      <small>JPG, PNG, WEBP — max 5MB</small>
+    </div>
+  </div>
+  <input #fileInput type="file" accept="image/*" (change)="onImageSelected($event)" style="display:none"/>
+  <p class="upload-status" *ngIf="uploadStatus">{{ uploadStatus }}</p>
+</div>
+        <div class="form-group full-width">
+          <label>Opis</label>
+          <textarea [(ngModel)]="form.description" placeholder="Opis proizvoda" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveProduct()">{{ editingId ? 'Sačuvaj izmene' : 'Dodaj proizvod' }}</button>
+        <button class="btn-secondary" (click)="closeForm()">Otkaži</button>
+      </div>
+      <div class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</div>
+    </div>
+
+    <!-- Tabela proizvoda -->
+    <div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Slika</th>
+            <th>Naziv</th>
+            <th>Brend</th>
+            <th>Kategorija</th>
+            <th>Cena</th>
+            <th>Stanje</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of products">
+            <td><img [src]="p.imageUrl || 'assets/placeholder.png'" class="product-thumb"/></td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.brand }}</td>
+            <td>{{ p.categoryName }}</td>
+            <td>{{ p.price | number }} RSD</td>
+            <td>
+              <span [class.low-stock]="p.stockQuantity < 5">{{ p.stockQuantity }}</span>
+            </td>
+            <td class="actions">
+              <button class="edit-btn" (click)="editProduct(p)">✏️</button>
+              <button class="delete-btn" (click)="deleteProduct(p.id)">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginacija -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn">‹</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn">›</button>
+    </div>
+
+    <div class="toast" *ngIf="toastMsg" [class.show]="toastMsg">{{ toastMsg }}</div>
+  </main>
+</div>

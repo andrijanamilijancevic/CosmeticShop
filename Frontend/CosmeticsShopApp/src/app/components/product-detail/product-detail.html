@@ -1,0 +1,70 @@
+<div class="detail-page" *ngIf="product">
+  <div class="container">
+    <a (click)="goBack()" class="back-link">← Nazad</a>
+
+    <div class="detail-grid">
+      <div class="detail-image">
+        <img [src]="product.imageUrl || 'assets/placeholder.png'" [alt]="product.name"/>
+      </div>
+
+      <div class="detail-info">
+        <span class="product-category">{{ product.categoryName }}</span>
+        <h1>{{ product.name }}</h1>
+        <span class="product-brand">{{ product.brand }}</span>
+
+        <div class="rating" *ngIf="product.reviewCount > 0">
+          ⭐ {{ product.averageRating | number:'1.1-1' }}
+          <span>({{ product.reviewCount }} recenzija)</span>
+        </div>
+
+        <p class="product-price">{{ product.price | number }} RSD</p>
+        <p class="product-description">{{ product.description }}</p>
+
+        <div class="stock-info" [class.out-of-stock]="product.stockQuantity === 0">
+          {{ product.stockQuantity > 0 ? '✅ Na stanju: ' + product.stockQuantity + ' kom' : '❌ Rasprodato' }}
+        </div>
+
+        <div class="quantity-row" *ngIf="product.stockQuantity > 0">
+          <div class="quantity-controls">
+            <button (click)="decreaseQuantity()">−</button>
+            <span>{{ quantity }}</span>
+            <button (click)="increaseQuantity()">+</button>
+          </div>
+          <button class="btn-primary" (click)="addToCart()">🛒 Dodaj u korpu</button>
+          <button class="wishlist-btn" (click)="toggleWishlist()">♡ Wish lista</button>
+        </div>
+
+        <div class="toast-inline" *ngIf="toastMsg">{{ toastMsg }}</div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <h3>⭐ Recenzije</h3>
+
+      <div class="review-form" *ngIf="isLoggedIn">
+        <h4>Ostavite recenziju</h4>
+        <div class="rating-select">
+          <span>Ocena:</span>
+          <button *ngFor="let s of [1,2,3,4,5]" (click)="newReview.rating = s" [class.selected]="newReview.rating >= s">⭐</button>
+        </div>
+        <textarea [(ngModel)]="newReview.comment" placeholder="Napišite recenziju..." rows="3"></textarea>
+        <button class="btn-primary" (click)="submitReview()">Pošalji recenziju</button>
+      </div>
+
+      <div class="review-card" *ngFor="let review of reviews">
+        <div class="review-header">
+          <strong>{{ review.customerName }}</strong>
+          <span class="review-rating">{{ '⭐'.repeat(review.rating) }}</span>
+          <span class="review-date">{{ review.createdAt | date:'dd.MM.yyyy' }}</span>
+        </div>
+        <p>{{ review.comment }}</p>
+      </div>
+
+      <div class="empty" *ngIf="reviews.length === 0">
+        <p>Još nema recenzija za ovaj proizvod.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="!product">Učitavanje...</div> 

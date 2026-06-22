@@ -1,0 +1,176 @@
+.profile-page {
+  padding: 40px 0;
+  min-height: 80vh;
+}
+
+.page-title {
+  color: var(--dark-pink);
+  margin-bottom: 32px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.profile-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--dark-pink);
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.profile-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.role-badge {
+  background: var(--bg-pink);
+  color: var(--dark-pink);
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.profile-form {
+  text-align: left;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.profile-form h4 {
+  color: var(--dark-pink);
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #f0f0f0;
+  border-radius: 10px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-group input:focus {
+  border-color: var(--primary-pink);
+}
+
+.btn-primary, .btn-secondary {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.toast-inline {
+  margin-top: 16px;
+  background: var(--bg-pink);
+  color: var(--dark-pink);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.orders-section h3 {
+  color: var(--dark-pink);
+  margin-bottom: 20px;
+}
+
+.order-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.order-id {
+  font-weight: 700;
+  color: var(--dark-pink);
+}
+
+.order-date {
+  color: var(--text-light);
+  font-size: 0.85rem;
+  margin-left: auto;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.pending { background: #fff3cd; color: #856404; }
+.status-badge.paid { background: #d4edda; color: #155724; }
+.status-badge.shipped { background: #cce5ff; color: #004085; }
+.status-badge.delivered { background: #d4edda; color: #155724; }
+.status-badge.cancelled { background: #f8d7da; color: #721c24; }
+
+.order-item {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  padding: 4px 0;
+}
+
+.order-total {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  text-align: right;
+  color: var(--dark-pink);
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}

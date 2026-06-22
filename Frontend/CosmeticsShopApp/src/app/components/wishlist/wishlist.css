@@ -1,0 +1,133 @@
+.wishlist-page {
+  padding: 40px 0;
+  min-height: 80vh;
+}
+
+.page-title {
+  color: var(--dark-pink);
+  margin-bottom: 32px;
+}
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.product-card {
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.product-image {
+  position: relative;
+  height: 220px;
+  background: var(--bg-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-image img {
+  max-height: 180px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--dark-pink);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn:hover {
+  background: var(--dark-pink);
+  color: white;
+}
+
+.product-info {
+  padding: 16px;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  color: var(--dark-pink);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.product-info h3 {
+  font-size: 1rem;
+  margin: 8px 0 4px;
+  color: var(--text-dark);
+}
+
+.product-brand {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.product-price {
+  font-weight: 700;
+  color: var(--dark-pink);
+}
+
+.add-btn {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 2;
+}
+
+.product-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.empty-wishlist {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-wishlist p {
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-light);
+}

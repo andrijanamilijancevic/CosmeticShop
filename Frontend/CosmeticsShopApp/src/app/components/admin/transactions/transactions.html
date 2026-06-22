@@ -1,0 +1,61 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <h3>⚙️ Admin Panel</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/products" routerLinkActive="active">💄 Proizvodi</a>
+      <a routerLink="/admin/orders" routerLinkActive="active">📦 Porudžbine</a>
+      <a routerLink="/admin/users" routerLinkActive="active">👥 Korisnici</a>
+      <a routerLink="/admin/transactions" routerLinkActive="active">💳 Transakcije</a>
+    </nav>
+    <a routerLink="/" class="back-btn">← Nazad na shop</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <h2>💳 Stripe transakcije</h2>
+    </div>
+
+    <div class="table-container">
+      <table class="admin-table" *ngIf="transactions.length > 0">
+        <thead>
+          <tr>
+            <th>Porudžbina #</th>
+            <th>Kupac</th>
+            <th>Email</th>
+            <th>Iznos</th>
+            <th>Stripe ID</th>
+            <th>Datum</th>
+            <th>Proizvodi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of transactions">
+            <td>#{{ t.orderId }}</td>
+            <td>{{ t.customerName }}</td>
+            <td>{{ t.customerEmail }}</td>
+            <td class="amount">{{ t.totalAmount | number }} RSD</td>
+            <td class="stripe-id">{{ t.stripePaymentId }}</td>
+            <td>{{ t.createdAt | date:'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <div *ngFor="let item of t.items" class="item-row">
+                {{ item.productName }} x{{ item.quantity }} — {{ item.unitPrice | number }} RSD
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="empty" *ngIf="transactions.length === 0">
+        <p>💳 Nema završenih transakcija.</p>
+      </div>
+    </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn">‹</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn">›</button>
+    </div>
+  </main>
+</div>

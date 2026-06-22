@@ -1,0 +1,47 @@
+.success-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.success-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow-md);
+}
+
+.success-icon {
+  font-size: 5rem;
+  margin-bottom: 24px;
+  animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.success-card h2 {
+  color: var(--dark-pink);
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.success-card p {
+  color: var(--text-light);
+  margin-bottom: 32px;
+  font-size: 1.1rem;
+}
+
+.success-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

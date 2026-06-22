@@ -1,0 +1,30 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>💄 Dobrodošli nazad</h2>
+      <p>Prijavite se na svoj nalog</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="vas@email.com" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Lozinka</label>
+        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required/>
+      </div>
+
+      <div class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        {{ loading ? 'Prijavljivanje...' : 'Prijava' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Nemate nalog? <a routerLink="/register">Registrujte se</a>
+    </p>
+  </div>
+</div>

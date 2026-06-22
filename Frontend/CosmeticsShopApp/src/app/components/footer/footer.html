@@ -1,0 +1,74 @@
+<footer class="footer">
+  <!-- Top banner -->
+  <div class="footer-banner">
+    <p>✨ Besplatna dostava za porudžbine iznad 3000 RSD | Sigurno plaćanje putem Stripe-a</p>
+  </div>
+
+  <!-- Main footer -->
+  <div class="footer-main">
+    <div class="container footer-grid">
+
+      <div class="footer-col">
+        <h4>O NAMA</h4>
+        <ul>
+          <li><a href="#">O GlamShop-u</a></li>
+          <li><a href="#">Karijere</a></li>
+          <li><a href="#">Politika privatnosti</a></li>
+          <li><a href="#">Uslovi korišćenja</a></li>
+          <li><a href="#">Kolačići</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>PODRŠKA</h4>
+        <ul>
+          <li><a href="#">Korisnička podrška</a></li>
+          <li><a href="#">Dostava</a></li>
+          <li><a href="#">Povrat proizvoda</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a routerLink="/profile">Moj nalog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>OTKRIJTE</h4>
+        <ul>
+          <li><a routerLink="/beauty-quiz">✨ Beauty Quiz</a></li>
+          <li><a routerLink="/shade-finder">🎨 Shade Finder</a></li>
+          <li><a routerLink="/products">Novi proizvodi</a></li>
+          <li><a routerLink="/products">Najprodavaniji</a></li>
+          <li><a href="#">Poklon setovi</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-newsletter">
+        <h4>PRIJAVITE SE NA NEWSLETTER</h4>
+        <p>Budite prvi koji saznaju o novim proizvodima, ponudama i beauty savetima.</p>
+        <div class="newsletter-form">
+          <input type="email" [(ngModel)]="email" placeholder="Email adresa"/>
+          <button class="btn-primary" (click)="subscribe()">PRIJAVI SE</button>
+        </div>
+        <p class="newsletter-note" *ngIf="subscribed">✓ Uspešno ste se prijavili!</p>
+
+        <div class="social-links">
+          <a href="#" class="social-btn">f</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">ig</a>
+          <a href="#" class="social-btn">yt</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© 2025 GlamShop. Sva prava zadržana.</p>
+      <div class="payment-methods">
+        <span>💳 Visa</span>
+        <span>💳 Mastercard</span>
+        <span>🔒 Stripe</span>
+      </div>
+    </div>
+  </div>
+</footer>

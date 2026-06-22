@@ -1,0 +1,54 @@
+<div class="cart-page">
+  <div class="container">
+    <h2 class="page-title">🛒 Moja korpa</h2>
+
+    <div class="loading" *ngIf="loading">Učitavanje...</div>
+
+    <div class="empty-cart" *ngIf="!loading && cartItems.length === 0">
+      <p>😔 Vaša korpa je prazna.</p>
+      <a routerLink="/products" class="btn-primary">Istraži proizvode</a>
+    </div>
+
+    <div class="cart-content" *ngIf="!loading && cartItems.length > 0">
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <img [src]="item.imageUrl || 'assets/placeholder.png'" [alt]="item.productName"/>
+          <div class="item-info">
+            <h3>{{ item.productName }}</h3>
+            <span class="item-price">{{ item.unitPrice | number }} RSD</span>
+          </div>
+          <div class="quantity-controls">
+            <button (click)="updateQuantity(item.id, item.productId, item.quantity - 1)">−</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="updateQuantity(item.id, item.productId, item.quantity + 1)">+</button>
+          </div>
+          <span class="item-total">{{ item.totalPrice | number }} RSD</span>
+          <button class="remove-btn" (click)="removeItem(item.id)">🗑️</button>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <h3>Pregled porudžbine</h3>
+
+        <div class="coupon-section">
+          <input type="text" [(ngModel)]="couponCode" placeholder="Unesite kupon kod"/>
+          <button (click)="applyCoupon()" class="btn-secondary">Primeni</button>
+        </div>
+        <div class="coupon-msg" *ngIf="couponMsg">{{ couponMsg }}</div>
+
+        <div class="summary-row">
+          <span>Ukupno:</span>
+          <span class="total">{{ totalAmount | number }} RSD</span>
+        </div>
+
+        <button class="btn-primary checkout-btn" (click)="checkout()">
+          Nastavi na plaćanje 💳
+        </button>
+
+        <a routerLink="/products" class="continue-shopping">← Nastavi kupovinu</a>
+      </div>
+    </div>
+
+    <div class="toast" *ngIf="toastMsg" [class.show]="toastMsg">{{ toastMsg }}</div>
+  </div>
+</div>

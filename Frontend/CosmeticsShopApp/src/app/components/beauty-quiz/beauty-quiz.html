@@ -1,0 +1,84 @@
+<div class="quiz-page">
+  <div class="container">
+
+    <!-- Intro -->
+    <div class="quiz-intro" *ngIf="!started && !finished">
+      <div class="quiz-icon">✨</div>
+      <h1>Beauty Quiz</h1>
+      <p>Odgovorite na nekoliko pitanja i dobijte personalizovane preporuke proizvoda za vašu kožu!</p>
+      <button class="btn-primary" (click)="start()">Započni quiz →</button>
+    </div>
+
+    <!-- Pitanja -->
+    <div class="quiz-questions" *ngIf="started && !finished">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="((currentQuestion + 1) / questions.length) * 100"></div>
+      </div>
+      <p class="progress-text">Pitanje {{ currentQuestion + 1 }} od {{ questions.length }}</p>
+
+      <div class="question-card">
+        <h2>{{ questions[currentQuestion].text }}</h2>
+        <div class="options">
+          <button
+            *ngFor="let option of questions[currentQuestion].options"
+            class="option-btn"
+            [class.selected]="answers[currentQuestion] === option.value"
+            (click)="selectAnswer(option.value)">
+            <span class="option-icon">{{ option.icon }}</span>
+            <span>{{ option.label }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="quiz-nav">
+        <button class="btn-secondary" (click)="prev()" *ngIf="currentQuestion > 0">← Nazad</button>
+        <button class="btn-primary" (click)="next()" [disabled]="!answers[currentQuestion]">
+          {{ currentQuestion === questions.length - 1 ? 'Vidi rezultate ✨' : 'Sledeće →' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Rezultati -->
+    <div class="quiz-results" *ngIf="finished">
+      <div class="result-header">
+        <h2>✨ Vaša Beauty rutina</h2>
+        <p>Na osnovu vaših odgovora, preporučujemo:</p>
+      </div>
+
+      <div class="skin-profile">
+        <div class="profile-item">
+          <span class="profile-label">Tip kože</span>
+          <span class="profile-value">{{ skinProfile.type }}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Glavna briga</span>
+          <span class="profile-value">{{ skinProfile.concern }}</span>
+        </div>
+        <div class="profile-item">
+          <span class="profile-label">Rutina</span>
+          <span class="profile-value">{{ skinProfile.routine }}</span>
+        </div>
+      </div>
+
+      <h3>Preporučeni proizvodi za vas:</h3>
+      <div class="recommended-products">
+        <div class="rec-card" *ngFor="let rec of recommendations">
+          <div class="rec-icon">{{ rec.icon }}</div>
+          <div class="rec-info">
+            <h4>{{ rec.category }}</h4>
+            <p>{{ rec.description }}</p>
+          </div>
+          <a [routerLink]="['/products']" [queryParams]="{categoryId: rec.categoryId}" class="btn-primary rec-btn">
+            Istraži →
+          </a>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-secondary" (click)="restart()">🔄 Ponovi quiz</button>
+        <a routerLink="/products" class="btn-primary">Pogledaj sve proizvode</a>
+      </div>
+    </div>
+
+  </div>
+</div>

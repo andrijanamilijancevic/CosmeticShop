@@ -1,0 +1,61 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <h3>⚙️ Admin Panel</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/products" routerLinkActive="active">💄 Proizvodi</a>
+      <a routerLink="/admin/orders" routerLinkActive="active">📦 Porudžbine</a>
+      <a routerLink="/admin/users" routerLinkActive="active">👥 Korisnici</a>
+      <a routerLink="/admin/transactions" routerLinkActive="active">💳 Transakcije</a>
+    </nav>
+    <a routerLink="/" class="back-btn">← Nazad na shop</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <h2>👥 Upravljanje korisnicima</h2>
+      <input type="text" [(ngModel)]="search" (input)="onSearch()" placeholder="🔍 Pretraži korisnike..." class="search-input"/>
+    </div>
+
+    <div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Ime i prezime</th>
+            <th>Email</th>
+            <th>Rola</th>
+            <th>Datum registracije</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="role-badge" [class.admin]="user.role === 'Admin'">
+                {{ user.role }}
+              </span>
+            </td>
+            <td>{{ user.createdAt | date:'dd.MM.yyyy' }}</td>
+            <td>
+              <button class="delete-btn" (click)="deleteUser(user.id)" *ngIf="user.role !== 'Admin'">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn">‹</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn">›</button>
+    </div>
+
+    <div class="toast" *ngIf="toastMsg" [class.show]="toastMsg">{{ toastMsg }}</div>
+  </main>
+</div>

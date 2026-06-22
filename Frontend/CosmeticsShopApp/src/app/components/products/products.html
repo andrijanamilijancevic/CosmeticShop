@@ -1,0 +1,70 @@
+<div class="products-page">
+  <div class="container">
+    <div class="page-header">
+      <h2>Naši proizvodi</h2>
+      <p>Pronađite savršen proizvod za vašu rutinu nege</p>
+    </div>
+
+    <!-- Filteri -->
+    <div class="filters-bar">
+      <input type="text" [(ngModel)]="search" (input)="onSearch()" placeholder="🔍 Pretraži proizvode..." class="search-input"/>
+
+      <select [(ngModel)]="selectedCategory" (change)="onFilter()" class="filter-select">
+        <option value="">Sve kategorije</option>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+
+      <select [(ngModel)]="sortBy" (change)="onFilter()" class="filter-select">
+        <option value="name">Naziv A-Z</option>
+        <option value="price_asc">Cena rastuće</option>
+        <option value="price_desc">Cena opadajuće</option>
+        <option value="newest">Najnoviji</option>
+      </select>
+    </div>
+
+    <!-- Proizvodi -->
+    <div class="products-grid" *ngIf="products.length > 0">
+      <div class="product-card" *ngFor="let product of products">
+        <div class="product-image">
+          <img [src]="product.imageUrl || 'assets/placeholder.png'" [alt]="product.name" (error)="onImgError($event)"/>
+            <button class="wishlist-btn" (click)="toggleWishlist(product.id)" title="Dodaj na wish listu">
+            {{ wishlistIds.includes(product.id) ? '♥' : '♡' }}
+            </button>
+        </div>
+        <div class="product-info">
+          <span class="product-category">{{ product.categoryName }}</span>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <span class="product-brand">{{ product.brand }}</span>
+          <div class="product-rating" *ngIf="product.reviewCount > 0">
+            <span class="stars">⭐ {{ product.averageRating | number:'1.1-1' }}</span>
+            <span class="review-count">({{ product.reviewCount }})</span>
+          </div>
+          <div class="product-footer">
+            <span class="product-price">{{ product.price | number }} RSD</span>
+            <button class="btn-primary add-to-cart" (click)="addToCart(product)" [disabled]="product.stockQuantity === 0">
+              {{ product.stockQuantity === 0 ? 'Rasprodato' : '+ Korpa' }}
+            </button>
+          </div>
+        </div>
+        <a [routerLink]="['/products', product.id]" class="product-link"></a>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="products.length === 0 && !loading">
+      <p>😔 Nisu pronađeni proizvodi.</p>
+    </div>
+
+    <div class="loading" *ngIf="loading">
+      <p>Učitavanje...</p>
+    </div>
+
+    <!-- Paginacija -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn">‹</button>
+      <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn">›</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" *ngIf="toastMsg" [class.show]="toastMsg">{{ toastMsg }}</div>

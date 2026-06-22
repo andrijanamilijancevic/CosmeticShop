@@ -1,0 +1,78 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <h3>⚙️ Admin Panel</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/products" routerLinkActive="active">💄 Proizvodi</a>
+      <a routerLink="/admin/orders" routerLinkActive="active">📦 Porudžbine</a>
+      <a routerLink="/admin/users" routerLinkActive="active">👥 Korisnici</a>
+      <a routerLink="/admin/transactions" routerLinkActive="active">💳 Transakcije</a>
+    </nav>
+    <a routerLink="/" class="back-btn">← Nazad na shop</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <h2>Dashboard</h2>
+      <p>Dobrodošli u admin panel</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <h3>{{ stats.totalOrders }}</h3>
+          <p>Ukupno porudžbina</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <h3>{{ stats.totalUsers }}</h3>
+          <p>Registrovanih korisnika</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💄</div>
+        <div class="stat-info">
+          <h3>{{ stats.totalProducts }}</h3>
+          <p>Aktivnih proizvoda</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <h3>{{ stats.totalRevenue | number }} RSD</h3>
+          <p>Ukupan prihod</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-orders">
+      <h3>Poslednje porudžbine</h3>
+      <table class="admin-table" *ngIf="recentOrders.length > 0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kupac</th>
+            <th>Iznos</th>
+            <th>Status</th>
+            <th>Datum</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of recentOrders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.customerName }}</td>
+            <td>{{ order.totalAmount | number }} RSD</td>
+            <td><span class="status-badge" [class]="order.status.toLowerCase()">{{ order.status }}</span></td>
+            <td>{{ order.createdAt | date:'dd.MM.yyyy' }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="recentOrders.length === 0" class="empty">Nema porudžbina.</p>
+    </div>
+  </main>
+</div>

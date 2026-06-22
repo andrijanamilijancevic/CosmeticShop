@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-pink: #ff8fa3;
+  --light-pink: #ffb3c6;
+  --bg-pink: #fff0f3;
+  --dark-pink: #c9184a;
+  --text-dark: #2b2b2b;
+  --text-light: #5c5c5c;
+  --white: #ffffff;
+  
+  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
+  --shadow-hover: 0 20px 25px rgba(255, 143, 163, 0.2);
+  
+  --transition: all 0.3s ease;
+  --border-radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-pink);
+  color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn-primary {
+  background: var(--dark-pink);
+  color: var(--white);
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-block;
+  box-shadow: 0 4px 14px rgba(201, 24, 74, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 24, 74, 0.6);
+  background: #a4133c;
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--dark-pink);
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 1px solid var(--dark-pink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-pink);
+  transform: translateY(-2px);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+.btn-pink {
+  background-color: var(--dark-pink);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 24px;
+}
+
+.btn-pink:hover {
+  background-color: #a4133c;
+  color: white;
+}
+
+.text-pink {
+  color: var(--dark-pink);
+}
+
+.bg-pink-light {
+  background-color: var(--bg-pink);
+}

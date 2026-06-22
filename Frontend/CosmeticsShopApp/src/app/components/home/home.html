@@ -1,0 +1,70 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text animate-fade-in">
+      <h1>Otkrijte svoju <span class="highlight">savršenu</span> rutinu nege</h1>
+      <p>Premium kozmetika od vodećih svetskih brendova. Besplatna dostava za porudžbine iznad 3000 RSD.</p>
+      <div class="hero-buttons">
+        <a routerLink="/products" class="btn-primary">Istraži proizvode</a>
+        <a routerLink="/register" class="btn-secondary">Pridruži se</a>
+      </div>
+    </div>
+    <div class="hero-image animate-fade-in">
+      <div class="hero-blob">💄</div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Brza dostava</h3>
+        <p>Isporuka u roku od 2-3 radna dana na teritoriji Srbije</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <h3>Originalni proizvodi</h3>
+        <p>Garantujemo autentičnost svih proizvoda iz našeg asortimana</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Sigurno plaćanje</h3>
+        <p>Plaćanje karticom putem Stripe payment processora</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">↩️</div>
+        <h3>Lako vraćanje</h3>
+        <p>30 dana za povrat neotvorenih proizvoda bez pitanja</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="container">
+    <h2 class="section-title">Kategorije</h2>
+    <div class="categories-grid">
+      <a routerLink="/products" [queryParams]="{categoryId: 1}" class="category-card">
+        <span class="category-icon">🧴</span>
+        <span>Nega lica</span>
+      </a>
+      <a routerLink="/products" [queryParams]="{categoryId: 2}" class="category-card">
+        <span class="category-icon">🧖</span>
+        <span>Nega tela</span>
+      </a>
+      <a routerLink="/products" [queryParams]="{categoryId: 3}" class="category-card">
+        <span class="category-icon">💄</span>
+        <span>Šminka</span>
+      </a>
+      <a routerLink="/products" [queryParams]="{categoryId: 4}" class="category-card">
+        <span class="category-icon">🌸</span>
+        <span>Parfemi</span>
+      </a>
+      <a routerLink="/products" [queryParams]="{categoryId: 5}" class="category-card">
+        <span class="category-icon">💆</span>
+        <span>Nega kose</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -175,5 +175,35 @@ namespace CosmeticsShop.Controllers
 
             return Ok("Proizvod je deaktiviran.");
         }
+
+        // POST: api/Products/upload-image
+        [HttpPost("upload-image")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Nije izabrana slika.");
+
+            var allowedTypes = new[] { "image/jpeg", "image/jpg", "image/png", "image/webp" };
+            if (!allowedTypes.Contains(file.ContentType.ToLower()))
+                return BadRequest("Dozvoljeni formati: jpg, png, webp.");
+
+            if (file.Length > 5 * 1024 * 1024)
+                return BadRequest("Slika ne sme biti veća od 5MB.");
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var imageUrl = $"https://localhost:7298/images/{fileName}";
+            return Ok(new { imageUrl });
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace CosmeticsShop.Controllers
             });
 
             await _context.SaveChangesAsync();
-            return Ok("Proizvod dodat na wish listu.");
+            return Ok(new { message = "Proizvod dodat na wish listu." });
         }
 
         // DELETE: api/Wishlist/5
@@ -92,7 +92,7 @@ namespace CosmeticsShop.Controllers
             _context.WishlistItems.Remove(item);
             await _context.SaveChangesAsync();
 
-            return Ok("Proizvod uklonjen sa wish liste.");
+            return Ok(new { message = "Proizvod uklonjen sa wish liste." });
         }
     }
 }
