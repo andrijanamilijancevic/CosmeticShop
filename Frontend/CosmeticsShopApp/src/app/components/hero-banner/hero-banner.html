@@ -1,14 +1,79 @@
-<section class="hero-banner">
-  <div class="hero-image-wrapper">
-    <img src="/assets/hero_banner.png" alt="Premium Cosmetics" class="hero-image" />
-    <div class="hero-overlay"></div>
+<section class="carousel" aria-label="Hero banner carousel">
+
+  <!-- ── Slides ─────────────────────────────────────────── -->
+  <div class="carousel-track">
+    @for (slide of slides; track slide.headline; let i = $index) {
+      <div
+        class="carousel-slide"
+        [class.active]="i === currentSlide"
+        [style.background-image]="slide.backgroundImage"
+        [attr.aria-hidden]="i !== currentSlide">
+
+        <!-- Overlay — drives text legibility; set per-slide via slide.overlay -->
+        <div class="slide-overlay" [style.background]="slide.overlay"></div>
+
+        <!-- Left-anchored content — no glass panel, direct typographic presence -->
+        <div class="slide-content-wrapper">
+          <div class="slide-content" [class.slide-content--visible]="i === currentSlide">
+
+            <span class="slide-accent">{{ slide.accent }}</span>
+
+            <h1 class="slide-headline">
+              @for (line of slide.headline.split('\n'); track line) {
+                <span class="headline-line">{{ line }}</span>
+              }
+            </h1>
+
+            <p class="slide-subtitle">{{ slide.subtitle }}</p>
+
+            <a [routerLink]="slide.ctaLink" class="slide-cta" id="hero-cta-{{ i }}">
+              {{ slide.cta }}
+              <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+              </svg>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    }
   </div>
-  
-  <div class="container hero-content animate-fade-in">
-    <div class="hero-text glass">
-      <h1>Otkrijte Svoju Prirodnu Lepotu</h1>
-      <p>Premijum kolekcija kozmetike sazdana od pažljivo biranih sastojaka koji neguju i ističu vaš sjaj.</p>
-      <button class="btn-primary hero-btn">Shop Now</button>
-    </div>
+
+  <!-- ── Navigation Arrows ──────────────────────────────── -->
+  <button
+    class="carousel-arrow carousel-arrow--prev"
+    id="carousel-prev"
+    (click)="onArrowPrev()"
+    aria-label="Prethodni slajd">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+
+  <button
+    class="carousel-arrow carousel-arrow--next"
+    id="carousel-next"
+    (click)="onArrowNext()"
+    aria-label="Sledeci slajd">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </button>
+
+  <!-- ── Dot Indicators ─────────────────────────────────── -->
+  <div class="carousel-dots" role="tablist" aria-label="Slajdovi">
+    @for (slide of slides; track slide.headline; let i = $index) {
+      <button
+        class="carousel-dot"
+        [class.carousel-dot--active]="i === currentSlide"
+        [id]="'carousel-dot-' + i"
+        (click)="onDotClick(i)"
+        [attr.aria-label]="'Slajd ' + (i + 1)"
+        role="tab"
+        [attr.aria-selected]="i === currentSlide">
+      </button>
+    }
   </div>
+
 </section>

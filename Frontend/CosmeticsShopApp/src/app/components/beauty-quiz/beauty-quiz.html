@@ -1,83 +1,247 @@
 <div class="quiz-page">
-  <div class="container">
+  <div class="quiz-container">
 
-    <!-- Intro -->
-    <div class="quiz-intro" *ngIf="!started && !finished">
-      <div class="quiz-icon">✨</div>
-      <h1>Beauty Quiz</h1>
-      <p>Odgovorite na nekoliko pitanja i dobijte personalizovane preporuke proizvoda za vašu kožu!</p>
-      <button class="btn-primary" (click)="start()">Započni quiz →</button>
+    <!-- Left Column: Visual Storytelling -->
+    <div class="quiz-visual-panel">
+      <!-- Inclusivity shade matching swatches background -->
+      <div class="quiz-texture-bg" style="background-image: url('/image_19.png')"></div>
+      
+      <!-- Frame for active models/closeups -->
+      <div class="quiz-image-frame">
+        @if (!started && !finished) {
+          <img src="/image_22.jpg" alt="GlamShop community" class="quiz-hero-img animate-fade" />
+        } @else if (started && !finished) {
+          <img [src]="quizImages[currentQuestion]" alt="Skin type focus" class="quiz-hero-img animate-fade" [attr.data-q]="currentQuestion" />
+        } @else if (finished) {
+          <img src="/image_19.png" alt="Vaša preporučena rutina" class="quiz-hero-img animate-fade" />
+        }
+      </div>
     </div>
 
-    <!-- Pitanja -->
-    <div class="quiz-questions" *ngIf="started && !finished">
-      <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="((currentQuestion + 1) / questions.length) * 100"></div>
-      </div>
-      <p class="progress-text">Pitanje {{ currentQuestion + 1 }} od {{ questions.length }}</p>
-
-      <div class="question-card">
-        <h2>{{ questions[currentQuestion].text }}</h2>
-        <div class="options">
-          <button
-            *ngFor="let option of questions[currentQuestion].options"
-            class="option-btn"
-            [class.selected]="answers[currentQuestion] === option.value"
-            (click)="selectAnswer(option.value)">
-            <span class="option-icon">{{ option.icon }}</span>
-            <span>{{ option.label }}</span>
+    <!-- Right Column: Interactive quiz content -->
+    <div class="quiz-content-panel">
+      
+      <!-- Intro screen -->
+      @if (!started && !finished) {
+        <div class="quiz-intro animate-fade">
+          <span class="quiz-tagline">Personalizovana nega</span>
+          <h1 class="quiz-title">Beauty Quiz</h1>
+          <p class="quiz-description">
+            Odgovorite na 5 kratkih pitanja o vašoj koži kako bismo kreirali vašu idealnu, premium rutinu lepote prilagođenu vašim jedinstvenim potrebama.
+          </p>
+          <button class="btn-start" (click)="start()">
+            Započni quiz <span class="arrow">→</span>
           </button>
         </div>
-      </div>
+      }
 
-      <div class="quiz-nav">
-        <button class="btn-secondary" (click)="prev()" *ngIf="currentQuestion > 0">← Nazad</button>
-        <button class="btn-primary" (click)="next()" [disabled]="!answers[currentQuestion]">
-          {{ currentQuestion === questions.length - 1 ? 'Vidi rezultate ✨' : 'Sledeće →' }}
-        </button>
-      </div>
-    </div>
-
-    <!-- Rezultati -->
-    <div class="quiz-results" *ngIf="finished">
-      <div class="result-header">
-        <h2>✨ Vaša Beauty rutina</h2>
-        <p>Na osnovu vaših odgovora, preporučujemo:</p>
-      </div>
-
-      <div class="skin-profile">
-        <div class="profile-item">
-          <span class="profile-label">Tip kože</span>
-          <span class="profile-value">{{ skinProfile.type }}</span>
-        </div>
-        <div class="profile-item">
-          <span class="profile-label">Glavna briga</span>
-          <span class="profile-value">{{ skinProfile.concern }}</span>
-        </div>
-        <div class="profile-item">
-          <span class="profile-label">Rutina</span>
-          <span class="profile-value">{{ skinProfile.routine }}</span>
-        </div>
-      </div>
-
-      <h3>Preporučeni proizvodi za vas:</h3>
-      <div class="recommended-products">
-        <div class="rec-card" *ngFor="let rec of recommendations">
-          <div class="rec-icon">{{ rec.icon }}</div>
-          <div class="rec-info">
-            <h4>{{ rec.category }}</h4>
-            <p>{{ rec.description }}</p>
+      <!-- Questions wizard -->
+      @else if (started && !finished) {
+        <div class="quiz-wizard-header animate-fade" [attr.data-q]="currentQuestion">
+          <span class="quiz-counter">Pitanje {{ currentQuestion + 1 }} od {{ questions.length }}</span>
+          <div class="quiz-progress-track">
+            <div class="quiz-progress-fill" [style.width.%]="((currentQuestion + 1) / questions.length) * 100"></div>
           </div>
-          <a [routerLink]="['/products']" [queryParams]="{categoryId: rec.categoryId}" class="btn-primary rec-btn">
-            Istraži →
-          </a>
         </div>
-      </div>
 
-      <div class="result-actions">
-        <button class="btn-secondary" (click)="restart()">🔄 Ponovi quiz</button>
-        <a routerLink="/products" class="btn-primary">Pogledaj sve proizvode</a>
-      </div>
+        <div class="quiz-question-body animate-fade" [attr.data-q]="currentQuestion">
+          <h2 class="quiz-question-text">{{ questions[currentQuestion].text }}</h2>
+          
+          <div class="quiz-options-stack">
+            @for (option of questions[currentQuestion].options; track option.value) {
+              <button 
+                class="quiz-option-card"
+                [class.selected]="answers[currentQuestion] === option.value"
+                (click)="selectAnswer(option.value)">
+                
+                <div class="quiz-option-icon-wrap">
+                  @switch (option.value) {
+                    <!-- Question 1: Skin Type -->
+                    @case ('oily') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    }
+                    @case ('dry') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                      </svg>
+                    }
+                    @case ('combination') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 3v18M6 21h12M6 7l6-2 6 2M3 13c0-3.3 2.7-6 6-6s6 2.7 6 6M15 13c0-3.3 2.7-6 6-6s6 2.7 6 6M9 13v4M21 13v4"/>
+                      </svg>
+                    }
+                    @case ('normal') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 5a3 3 0 00-3 3 3 3 0 003-3zm0 14a3 3 0 003-3 3 3 0 00-3 3zm-7-7a3 3 0 003 3 3 3 0 00-3-3zm14 0a3 3 0 00-3-3 3 3 0 003 3z"/>
+                      </svg>
+                    }
+                    <!-- Question 2: Concern -->
+                    @case ('acne') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/>
+                      </svg>
+                    }
+                    @case ('aging') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M5 2h14M5 22h14M19 2l-7 10 7 10M5 2l7 10-7 10"/>
+                      </svg>
+                    }
+                    @case ('pigmentation') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                      </svg>
+                    }
+                    @case ('hydration') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 22a7 7 0 007-7c0-4.3-7-13-7-13S5 10.7 5 15a7 7 0 007 7z"/>
+                      </svg>
+                    }
+                    <!-- Question 3: Time -->
+                    @case ('minimal') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                      </svg>
+                    }
+                    @case ('basic') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                      </svg>
+                    }
+                    @case ('moderate') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 3M12 2v2"/>
+                      </svg>
+                    }
+                    @case ('extensive') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="14" r="8"/><path d="M12 2v4M12 10v4l3 2M9 2h6"/>
+                      </svg>
+                    }
+                    <!-- Question 4: Age -->
+                    @case ('young') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    }
+                    @case ('mid') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.64 5.64l2.82 2.82M15.54 15.54l2.82 2.82M5.64 18.36l2.82-2.82M15.54 8.46l2.82-2.82"/>
+                      </svg>
+                    }
+                    @case ('mature') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 2L15 9l7 3-7 3-3 7-3-7-7-3 7-3z"/>
+                      </svg>
+                    }
+                    @case ('senior') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2a6 6 0 00-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 00-6-6z"/>
+                      </svg>
+                    }
+                    <!-- Question 5: Sun -->
+                    @case ('sensitive') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 2v2M4.93 4.93l1.41 1.41M2 12h2M6.34 17.66l-1.41 1.41M20 18.5a4 4 0 00-4-4 4 4 0 00-4 4M15 11a3 3 0 013 3M19 12a3.5 3.5 0 00-3.5-3.5h-.7A5.5 5.5 0 004.5 13c0 .3.03.6.08.9"/>
+                      </svg>
+                    }
+                    @case ('moderate') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    }
+                    @case ('tan') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <circle cx="12" cy="12" r="6"/>
+                        <path d="M12 1v3M12 20v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+                      </svg>
+                    }
+                    @case ('resistant') {
+                      <svg class="option-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      </svg>
+                    }
+                  }
+                </div>
+
+                <span class="quiz-option-text">{{ option.label }}</span>
+              </button>
+            }
+          </div>
+
+          <div class="quiz-action-bar">
+            <button class="btn-quiz-back" (click)="prev()" *ngIf="currentQuestion > 0">
+              ← Nazad
+            </button>
+            <button 
+              class="btn-quiz-next" 
+              (click)="next()" 
+              [disabled]="!answers[currentQuestion]">
+              {{ currentQuestion === questions.length - 1 ? 'Vidi rezultate ✨' : 'Sledeće →' }}
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- Results view -->
+      @else if (finished) {
+        <div class="quiz-results animate-fade">
+          <div class="results-header">
+            <span class="quiz-tagline">Vaš Profil je Spreman</span>
+            <h2 class="results-title">Vaša Personalizovana Rutina</h2>
+            <p class="results-subtitle">Na osnovu vaših specifičnih tipova kože i ciljeva, dizajnirali smo sledeći ritual nege:</p>
+          </div>
+
+          <div class="results-profile-summary">
+            <div class="summary-badge">
+              <span class="summary-label">Tip kože</span>
+              <span class="summary-value">{{ skinProfile.type }}</span>
+            </div>
+            <div class="summary-badge">
+              <span class="summary-label">Fokus nege</span>
+              <span class="summary-value">{{ skinProfile.concern }}</span>
+            </div>
+            <div class="summary-badge">
+              <span class="summary-label">Tip rituala</span>
+              <span class="summary-value">{{ skinProfile.routine }}</span>
+            </div>
+          </div>
+
+          <div class="recommendations-container">
+            <h3 class="rec-section-title">Preporučeni Koraci i Proizvodi</h3>
+            <div class="rec-grid">
+              @for (rec of recommendations; track rec.category) {
+                <div class="rec-card-premium">
+                  <div class="rec-icon-wrap">
+                    <span class="rec-emoji">{{ rec.icon }}</span>
+                  </div>
+                  <div class="rec-info-premium">
+                    <h4>{{ rec.category }}</h4>
+                    <p>{{ rec.description }}</p>
+                  </div>
+                  <a [routerLink]="['/products']" [queryParams]="{categoryId: rec.categoryId}" class="btn-rec-shop">
+                    Istraži →
+                  </a>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="results-actions-bar">
+            <button class="btn-quiz-restart" (click)="restart()">
+              🔄 Ponovi quiz
+            </button>
+            <a routerLink="/products" class="btn-shop-all-quiz">
+              Pogledaj sve proizvode
+            </a>
+          </div>
+        </div>
+      }
+
     </div>
 
   </div>

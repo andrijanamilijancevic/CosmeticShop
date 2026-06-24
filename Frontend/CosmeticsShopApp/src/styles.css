@@ -1,34 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* ============================================================
+   GlamShop — Global Design System
+   Charlotte Tilbury-Inspired: Warm Ivory, Dusty Rose, Champagne Gold
+   ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Design Tokens ───────────────────────────────────────── */
 :root {
-  --primary-pink: #ff8fa3;
-  --light-pink: #ffb3c6;
-  --bg-pink: #fff0f3;
-  --dark-pink: #c9184a;
-  --text-dark: #2b2b2b;
-  --text-light: #5c5c5c;
-  --white: #ffffff;
-  
-  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
-  --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
-  --shadow-hover: 0 20px 25px rgba(255, 143, 163, 0.2);
-  
-  --transition: all 0.3s ease;
-  --border-radius: 16px;
+  /* Core palette — warm, luxurious */
+  --ivory:          #fdf6f0;
+  --cream:          #fff8f4;
+  --blush:          #f5e6df;
+  --powder:         #fce8e6;
+
+  /* Rose / Pink accents */
+  --rose-gold:      #c8937a;
+  --rose-dark:      #a0614a;
+  --rose-light:     #e8b4a0;
+  --rose-muted:     #d4a090;
+  --rose-pale:      #f2ddd6;
+
+  /* Champagne / Gold accents */
+  --gold:           #c9a96e;
+  --gold-light:     #e8d5a0;
+  --gold-pale:      #f5eed8;
+
+  /* Text */
+  --text-deep:      #1c1210;
+  --text-dark:      #2c1810;
+  --text-body:      #5c4a42;
+  --text-light:     #8a7268;
+  --text-muted:     #b09a90;
+
+  /* Backgrounds */
+  --bg-main:        #fdf6f0;
+  --bg-card:        #ffffff;
+  --bg-dark:        #1a0d0a;
+  --bg-charcoal:    #231614;
+
+  /* Whites */
+  --white:          #ffffff;
+  --white-warm:     #fffcfa;
+
+  /* Shadows — very soft, warm-toned */
+  --shadow-xs:      0 2px 8px rgba(168, 100, 60, 0.06);
+  --shadow-sm:      0 4px 16px rgba(168, 100, 60, 0.08);
+  --shadow-md:      0 8px 32px rgba(168, 100, 60, 0.12);
+  --shadow-lg:      0 20px 60px rgba(168, 100, 60, 0.16);
+  --shadow-hover:   0 24px 48px rgba(200, 147, 122, 0.22);
+
+  /* Glassmorphism */
+  --glass-bg:       rgba(255, 252, 250, 0.78);
+  --glass-border:   rgba(200, 147, 122, 0.18);
+
+  /* Borders */
+  --border-light:   rgba(200, 147, 122, 0.15);
+  --border-medium:  rgba(200, 147, 122, 0.30);
+  --border-radius:  14px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 40px;
+
+  /* Transitions */
+  --transition:     all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* {
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-pink);
-  color: var(--text-dark);
-  line-height: 1.6;
+  background-color: var(--bg-main);
+  color: var(--text-body);
+  line-height: 1.7;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography ──────────────────────────────────────────── */
+h1, h2, h3, h4, h5 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--text-deep);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 400; }
+h2 { font-size: clamp(2rem, 4vw, 3rem);   font-weight: 400; }
+h3 { font-size: 1.4rem; font-weight: 500; }
+h4 { font-size: 1.1rem; font-weight: 600; font-family: 'Inter', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
+
+p {
+  color: var(--text-body);
+  margin-bottom: 1rem;
+  font-size: 0.975rem;
+  line-height: 1.75;
 }
 
 a {
@@ -37,107 +114,187 @@ a {
   transition: var(--transition);
 }
 
-ul {
-  list-style: none;
-}
+ul { list-style: none; }
 
-/* Utilities */
+img { max-width: 100%; display: block; }
+
+/* ── Layout Utilities ────────────────────────────────────── */
 .container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 28px;
 }
 
-.btn-primary {
-  background: var(--dark-pink);
-  color: var(--white);
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: none;
+.section-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
   font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  color: var(--text-deep);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  max-width: 520px;
+  margin: 0 auto 52px;
+  line-height: 1.75;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--rose-dark);
+  color: var(--white);
+  padding: 13px 32px;
+  border-radius: 2px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: var(--transition);
   display: inline-block;
-  box-shadow: 0 4px 14px rgba(201, 24, 74, 0.4);
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(201, 24, 74, 0.6);
-  background: #a4133c;
-}
-
-.btn-secondary {
-  background: var(--white);
-  color: var(--dark-pink);
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: 1px solid var(--dark-pink);
-  font-weight: 600;
-  cursor: pointer;
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 100%);
+  opacity: 0;
   transition: var(--transition);
 }
 
-.btn-secondary:hover {
-  background: var(--bg-pink);
-  transform: translateY(-2px);
+.btn-primary:hover {
+  background: var(--text-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(44, 24, 16, 0.35);
+  color: var(--white);
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+.btn-primary:hover::after { opacity: 1; }
 
-/* Typography */
-h1, h2, h3, h4 {
-  color: var(--text-dark);
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-size: 3.5rem;
-  line-height: 1.1;
-  font-weight: 700;
-}
-
-h2 {
-  font-size: 2.5rem;
+.btn-secondary {
+  background: transparent;
+  color: var(--text-deep);
+  padding: 12px 32px;
+  border-radius: 2px;
+  border: 1px solid var(--text-deep);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
   font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-block;
 }
 
-p {
-  color: var(--text-light);
-  margin-bottom: 1rem;
+.btn-secondary:hover {
+  background: var(--text-deep);
+  color: var(--white);
+  transform: translateY(-1px);
 }
 
-/* Animations */
+.btn-outline-rose {
+  background: transparent;
+  color: var(--rose-dark);
+  padding: 12px 32px;
+  border-radius: 2px;
+  border: 1px solid var(--rose-dark);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.btn-outline-rose:hover {
+  background: var(--rose-dark);
+  color: var(--white);
+}
+
+/* ── Glassmorphism ───────────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: rgba(255, 252, 250, 0.82);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(200, 147, 122, 0.14);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider-rose {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose-gold), transparent);
+  margin: 20px auto;
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes floatGently {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s ease forwards;
-}
-.btn-pink {
-  background-color: var(--dark-pink);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 8px 24px;
+  animation: fadeInUp 0.9s ease forwards;
 }
 
-.btn-pink:hover {
-  background-color: #a4133c;
-  color: white;
-}
-
-.text-pink {
-  color: var(--dark-pink);
-}
-
-.bg-pink-light {
-  background-color: var(--bg-pink);
-}
+/* ── Misc Utilities ──────────────────────────────────────── */
+.text-rose    { color: var(--rose-gold); }
+.text-gold    { color: var(--gold); }
+.bg-ivory     { background-color: var(--ivory); }
+.bg-cream     { background-color: var(--cream); }
+.btn-pink     { background-color: var(--rose-dark); color: white; border: none; border-radius: 2px; padding: 8px 24px; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; }
+.btn-pink:hover { background-color: var(--text-dark); color: white; }
+.text-pink    { color: var(--rose-dark); }
+.bg-pink-light { background-color: var(--blush); }

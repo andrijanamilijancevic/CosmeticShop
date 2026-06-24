@@ -13,9 +13,12 @@ namespace CosmeticsShop.Controllers
     {
         private readonly AppDbContext _context;
 
-        public ProductsController(AppDbContext context)
+        private readonly IWebHostEnvironment _env;
+
+        public ProductsController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Products — svi mogu da vide proizvode
@@ -191,8 +194,12 @@ namespace CosmeticsShop.Controllers
             if (file.Length > 5 * 1024 * 1024)
                 return BadRequest("Slika ne sme biti veća od 5MB.");
 
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-            Directory.CreateDirectory(uploadsFolder);
+            // OVO JE KLJUČNA IZMENA:
+            // WebRootPath uvek pokazuje na wwwroot folder bez obzira gde se aplikacija izvršava
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "images");
+
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
 
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
             var filePath = Path.Combine(uploadsFolder, fileName);
@@ -202,8 +209,8 @@ namespace CosmeticsShop.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            var imageUrl = $"https://localhost:7298/images/{fileName}";
-            return Ok(new { imageUrl });
+            // Vraćamo relativnu putanju, a Angular neka doda osnovni URL (ili ostavi kako ti radi)
+            return Ok(new { imageUrl = fileName });
         }
     }
 }

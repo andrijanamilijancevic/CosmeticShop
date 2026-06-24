@@ -1,123 +1,708 @@
-.hero {
-  padding: 80px 0;
-  min-height: 85vh;
-  display: flex;
-  align-items: center;
-}
+/* ============================================================
+   Home Component — Features & Categories
+   Charlotte Tilbury-Inspired: warm ivory, dusty rose, champagne
+   ============================================================ */
 
-.hero-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  line-height: 1.2;
-  margin-bottom: 20px;
-}
-
-.highlight {
-  color: var(--dark-pink);
-}
-
-.hero-text p {
-  font-size: 1.1rem;
-  margin-bottom: 32px;
-  color: var(--text-light);
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.hero-blob {
-  font-size: 12rem;
-  text-align: center;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
+/* ── Features Section ────────────────────────────────────── */
 .features {
-  padding: 60px 0;
-  background: white;
+  padding: 100px 0 90px;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative gradient wash behind the section */
+.features::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -120px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(200,147,122,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 56px;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
+/* ── Feature Card ─────────────────────────────────────────── */
 .feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 32px 20px;
+  padding: 40px 28px 36px;
   border-radius: var(--border-radius);
-  background: var(--bg-pink);
+  background: rgba(255, 252, 250, 0.85);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(200, 147, 122, 0.12);
+  box-shadow: var(--shadow-sm);
   transition: var(--transition);
+  cursor: default;
 }
 
 .feature-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   box-shadow: var(--shadow-hover);
+  border-color: rgba(200, 147, 122, 0.28);
+  background: rgba(255, 252, 250, 0.95);
 }
 
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+/* ── Feature Icon ─────────────────────────────────────────── */
+.feature-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-pale) 0%, var(--gold-pale) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  transition: var(--transition);
+  flex-shrink: 0;
 }
 
-.feature-card h3 {
-  font-size: 1.1rem;
+.feature-card:hover .feature-icon-wrap {
+  background: linear-gradient(135deg, var(--rose-light) 0%, var(--gold-light) 100%);
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.feature-svg {
+  width: 34px;
+  height: 34px;
+  color: var(--rose-dark);
+  stroke: var(--rose-dark);
+}
+
+/* ── Feature Text ─────────────────────────────────────────── */
+.feature-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--text-deep);
   margin-bottom: 8px;
-  color: var(--dark-pink);
+  letter-spacing: 0.02em;
 }
 
+.feature-text p {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ── Categories Section ───────────────────────────────────── */
 .categories {
-  padding: 60px 0;
+  padding: 100px 0 110px;
+  background: var(--bg-main);
+  position: relative;
 }
 
-.section-title {
+/* Subtle gold wash */
+.categories::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.categories-header {
   text-align: center;
-  margin-bottom: 40px;
-  color: var(--dark-pink);
+  margin-bottom: 0;
 }
 
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  gap: 18px;
 }
 
+/* ── Category Card ────────────────────────────────────────── */
 .category-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 32px 20px;
-  background: white;
+  gap: 16px;
+  padding: 36px 16px 28px;
+  background: var(--bg-card);
   border-radius: var(--border-radius);
-  border: 2px solid transparent;
+  border: 1px solid var(--border-light);
   transition: var(--transition);
-  font-weight: 600;
-  color: var(--text-dark);
-  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  color: var(--text-body);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(200,147,122,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: var(--transition);
 }
 
 .category-card:hover {
-  border-color: var(--dark-pink);
-  color: var(--dark-pink);
-  transform: translateY(-5px);
+  transform: translateY(-10px);
   box-shadow: var(--shadow-hover);
+  border-color: rgba(200, 147, 122, 0.35);
 }
 
-.category-icon {
-  font-size: 2.5rem;
+.category-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Category Thumbnail Wrapper ───────────────────────────── */
+.cat-thumb-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+}
+
+/*
+ * Ring that appears on hover — animated border circle
+ */
+.cat-thumb-ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  transition: var(--transition);
+}
+
+.category-card:hover .cat-thumb-ring {
+  border-color: var(--rose-gold);
+  transform: scale(1.05);
+}
+
+/* ── Category Thumbnail Circle ────────────────────────────── */
+/*
+ * This is the gradient circle used as a placeholder.
+ * To replace with a real image, swap the entire <div class="cat-thumb ...">
+ * element with: <img src="/assets/categories/face-care.jpg" class="cat-thumb-img">
+ * and add the .cat-thumb-img style below.
+ */
+.cat-thumb {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Real image class — ready to use when you swap in photos */
+.cat-thumb-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  transition: var(--transition);
+}
+
+.category-card:hover .cat-thumb,
+.category-card:hover .cat-thumb-img {
+  transform: scale(1.06);
+}
+
+/* Per-category gradient fills
+   Replace background value with url('/assets/categories/...') center/cover no-repeat  */
+.cat-thumb--face {
+  /* swap ↓ with: background: url('/assets/categories/face-care.jpg') center/cover no-repeat */
+  background: linear-gradient(135deg, #f5e0d8 0%, #e8c5b5 50%, #ddb0a0 100%);
+}
+
+.cat-thumb--body {
+  /* swap ↓ with: background: url('/assets/categories/body-care.jpg') center/cover no-repeat */
+  background: linear-gradient(135deg, #ede0f0 0%, #d8c0e8 50%, #c8a8d5 100%);
+}
+
+.cat-thumb--makeup {
+  /* swap ↓ with: background: url('/assets/categories/makeup.jpg') center/cover no-repeat */
+  background: linear-gradient(135deg, #f8dce0 0%, #f0b8c0 50%, #e898a5 100%);
+}
+
+.cat-thumb--perfume {
+  /* swap ↓ with: background: url('/assets/categories/perfumes.jpg') center/cover no-repeat */
+  background: linear-gradient(135deg, #f0e8d0 0%, #e8d5a8 50%, #d4be80 100%);
+}
+
+.cat-thumb--hair {
+  /* swap ↓ with: background: url('/assets/categories/hair-care.jpg') center/cover no-repeat */
+  background: linear-gradient(135deg, #d8eaf0 0%, #b8d8e8 50%, #98c5d8 100%);
+}
+
+/* ── SVG Silhouettes inside circles ───────────────────────── */
+.cat-svg {
+  width: 44px;
+  height: 44px;
+  color: rgba(44, 24, 16, 0.52);
+  stroke: rgba(44, 24, 16, 0.52);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Category Labels ──────────────────────────────────────── */
+.cat-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-deep);
+  letter-spacing: 0.02em;
+  transition: var(--transition);
+}
+
+.cat-link-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: var(--transition);
+}
+
+.category-card:hover .cat-link-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.category-card:hover .cat-name {
+  color: var(--rose-dark);
+}
+
+/* ── Shared Section Header Elements ───────────────────────── */
+.section-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 400;
+  color: var(--text-deep);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.divider-rose {
+  width: 44px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose-gold), var(--gold), transparent);
+  margin: 16px auto 0;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.92rem;
+  max-width: 500px;
+  margin: 20px auto 52px;
+  line-height: 1.78;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .features { padding: 72px 0 64px; }
+  .categories { padding: 72px 0 80px; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-card { padding: 32px 20px 28px; }
+
+  .cat-thumb-wrapper,
+  .cat-thumb,
+  .cat-thumb-img { width: 90px; height: 90px; }
+  .cat-thumb-ring { inset: -4px; }
+}
+
+@media (max-width: 480px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .category-card { padding: 28px 12px 22px; }
+}
+
+/* ============================================================
+   Best Sellers — Product Carousel Section Styling
+   Inspired by Maybelline layouts (aa56d0 & aa5724)
+   ============================================================ */
+.bestsellers {
+  padding: 100px 0;
+  background: var(--cream);
+  position: relative;
+}
+
+.bestsellers-header {
+  text-align: center;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bestsellers-title {
+  margin-bottom: 12px;
+}
+
+.shop-all-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-dark);
+  border-bottom: 1px solid var(--rose-light);
+  padding-bottom: 4px;
+  margin-top: 10px;
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.shop-all-btn:hover {
+  color: var(--text-dark);
+  border-bottom-color: var(--rose-dark);
+  letter-spacing: 0.22em;
+}
+
+.bestsellers-carousel-wrap {
+  position: relative;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.products-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+  padding: 10px 4px 30px;
+}
+
+.empty-state {
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--text-light);
+  padding: 60px 0;
+  width: 100%;
+}
+
+.products-track::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari/Edge */
+}
+
+/* ── Product Card ── */
+.product-card {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.product-img-block {
+  position: relative;
+  aspect-ratio: 3/4;
+  width: 100%;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid rgba(200, 147, 122, 0.08);
+}
+
+.product-card:hover .product-img-block {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  transition: var(--transition-slow);
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+.product-img-placeholder {
+  width: 50%;
+  height: 50%;
+  opacity: 0.75;
+  transition: var(--transition);
+}
+
+.product-card:hover .product-img-placeholder {
+  transform: scale(1.08) rotate(2deg);
+}
+
+/* Elegant 'NEW' Badge styled with rose-gold or charcoal instead of harsh black */
+.product-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--rose-dark);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(160, 97, 74, 0.25);
+  z-index: 2;
+}
+
+.product-info {
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.product-category {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 6px;
+}
+
+.product-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text-deep);
+  line-height: 1.35;
+  margin-bottom: 8px;
+  transition: var(--transition);
+}
+
+.product-card:hover .product-name {
+  color: var(--rose-dark);
+}
+
+.product-cta {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.product-card:hover .product-cta {
+  color: var(--rose-dark);
+  transform: translateX(4px);
+}
+
+/* Carousel Navigation Arrows */
+.prod-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--white-warm);
+  border: 1px solid var(--border-light);
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  z-index: 5;
+}
+
+.prod-arrow:hover {
+  background: var(--rose-pale);
+  color: var(--rose-dark);
+  border-color: var(--rose-light);
+  box-shadow: var(--shadow-md);
+}
+
+.prod-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.prod-arrow--prev {
+  left: 0;
+}
+
+.prod-arrow--next {
+  right: 0;
+}
+
+/* ============================================================
+   Stay in the Know — Newsletter Section Styling
+   Inspired by Maybelline aa5670 layout
+   ============================================================ */
+.newsletter-banner {
+  position: relative;
+  width: 100%;
+  padding: 120px 0;
+  background: linear-gradient(135deg, var(--rose-pale) 0%, var(--blush) 50%, var(--gold-pale) 100%);
+  /* 
+    CSS Comment Placeholder to swap in a real image URL later:
+    background: url('/assets/newsletter-bg.jpg') center / cover no-repeat;
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.newsletter-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(253, 246, 240, 0.65) 0%, rgba(253, 246, 240, 0.9) 100%);
+  z-index: 1;
+}
+
+.newsletter-content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.newsletter-label {
+  margin-bottom: 16px;
+}
+
+.newsletter-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 300;
+  color: var(--text-deep);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.newsletter-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-body);
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.newsletter-form-row {
+  display: flex;
+  gap: 12px;
+  max-width: 520px;
+  margin: 0 auto 20px;
+}
+
+.newsletter-input {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border-medium);
+  border-radius: 2px;
+  padding: 14px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  transition: var(--transition);
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--rose-dark);
+  box-shadow: 0 0 0 3px rgba(160, 97, 74, 0.12);
+}
+
+.newsletter-input::placeholder {
+  color: var(--text-muted);
+}
+
+.newsletter-submit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-arrow {
+  width: 16px;
+  height: 16px;
+  transition: var(--transition);
+}
+
+.newsletter-submit:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.newsletter-disclaimer {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  color: var(--text-light);
+  margin-bottom: 0;
+  opacity: 0.85;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .bestsellers { padding: 80px 0; }
+  .bestsellers-carousel-wrap { padding: 0 40px; }
+  .newsletter-banner { padding: 100px 0; }
+}
+
+@media (max-width: 768px) {
+  .bestsellers-header { margin-bottom: 40px; }
+  .products-track { gap: 16px; }
+  .product-card { flex: 0 0 250px; }
+  .prod-arrow { display: none; }
+  .bestsellers-carousel-wrap { padding: 0 20px; }
+  .newsletter-form-row { flex-direction: column; gap: 12px; }
+  .newsletter-submit { justify-content: center; width: 100%; }
 }

@@ -1,31 +1,104 @@
-<nav class="navbar">
-  <div class="container navbar-inner">
-    <a routerLink="/" class="navbar-brand">
-       GlamShop
+<nav class="navbar" id="main-navbar" [class.scrolled]="isScrolled">
+  <div class="navbar-inner">
+
+    <!-- ── Brand — left column ─────────────────────────────── -->
+    <a routerLink="/" class="navbar-brand" id="navbar-brand" aria-label="GlamShop — Početna">
+      <img src="/logo.png" alt="GlamShop logo" class="navbar-logo" />
+      <span class="brand-g">G</span>lamShop
     </a>
 
-    <ul class="navbar-links">
-      <li><a routerLink="/products" routerLinkActive="active">Proizvodi</a></li>
-      <li><a routerLink="/beauty-quiz" routerLinkActive="active">✨ Beauty Quiz</a></li>
-      <li><a routerLink="/shade-finder" routerLinkActive="active">🎨 Shade Finder</a></li>
+    <!-- ── Primary navigation — centered column ───────────── -->
+    <ul class="navbar-links" role="list">
+      <li>
+        <a routerLink="/products" routerLinkActive="nav-active" id="nav-products">
+          <span>Proizvodi</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/beauty-quiz" routerLinkActive="nav-active" id="nav-quiz">
+          <span>Beauty Quiz</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/shade-finder" routerLinkActive="nav-active" id="nav-shade">
+          <span>Shade Finder</span>
+        </a>
+      </li>
+
+      <!-- Auth: guest links -->
       <ng-container *ngIf="!(isLoggedIn$ | async)">
-        <li><a routerLink="/login" routerLinkActive="active">Prijava</a></li>
-        <li><a routerLink="/register" class="btn-primary">Registracija</a></li>
+        <li>
+          <a routerLink="/login" routerLinkActive="nav-active" id="nav-login">
+            <span>Prijava</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/register" class="nav-cta" id="nav-register">Registracija</a>
+        </li>
       </ng-container>
 
-      <ng-container *ngIf="isLoggedIn$ | async">
-        <ng-container *ngIf="!(isAdmin$ | async)">
-          <li><a routerLink="/cart" routerLinkActive="active"> Korpa <span class="cart-badge" *ngIf="cartCount > 0">{{cartCount}}</span></a></li>
-          <li><a routerLink="/wishlist" routerLinkActive="active">♡ Wish Lista</a></li>
-          <li><a routerLink="/profile" routerLinkActive="active">Profil</a></li>
-        </ng-container>
-
-        <ng-container *ngIf="isAdmin$ | async">
-          <li><a routerLink="/admin" routerLinkActive="active"> Admin</a></li>
-        </ng-container>
-
-        <li><a (click)="logout()" class="btn-secondary" style="cursor:pointer">Odjava</a></li>
+      <!-- Auth: admin links -->
+      <ng-container *ngIf="(isLoggedIn$ | async) && (isAdmin$ | async)">
+        <li>
+          <a routerLink="/admin" routerLinkActive="nav-active" id="nav-admin">
+            <span>Admin</span>
+          </a>
+        </li>
       </ng-container>
     </ul>
-  </div>
+
+    <!-- ── Utility icons — right column ───────────────────── -->
+    <div class="navbar-utils">
+
+
+
+      <!-- Wishlist (logged-in, non-admin) -->
+      <ng-container *ngIf="(isLoggedIn$ | async) && !(isAdmin$ | async)">
+        <a routerLink="/wishlist" class="icon-btn" id="nav-wishlist" aria-label="Wish lista">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </a>
+      </ng-container>
+
+      <!-- Cart (logged-in, non-admin) -->
+      <ng-container *ngIf="(isLoggedIn$ | async) && !(isAdmin$ | async)">
+        <a routerLink="/cart" class="icon-btn cart-icon-btn" id="nav-cart" aria-label="Korpa">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+        </a>
+      </ng-container>
+
+      <!-- Profile / User -->
+      <ng-container *ngIf="(isLoggedIn$ | async) && !(isAdmin$ | async)">
+        <a routerLink="/profile" class="icon-btn" id="nav-profile" aria-label="Profil">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </a>
+      </ng-container>
+
+      <!-- Logout (logged-in) -->
+      <ng-container *ngIf="isLoggedIn$ | async">
+        <button class="icon-btn logout-btn" id="nav-logout" (click)="logout()" aria-label="Odjava" title="Odjava">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+      </ng-container>
+
+    </div><!-- /navbar-utils -->
+
+  </div><!-- /navbar-inner -->
 </nav>

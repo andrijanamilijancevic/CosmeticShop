@@ -1,108 +1,195 @@
 <div class="shade-page">
-  <div class="container">
-    <div class="shade-header">
-      <h1>🎨 Shade Finder</h1>
-      <p>Pronađite savršenu nijansu pudera za vaš ton kože</p>
+  <div class="shade-container">
+
+    <!-- Left Column: AI Scanning Vibe Visuals -->
+    <div class="shade-visual-panel">
+      @if (!result) {
+        @if (selectedTone) {
+          <!-- Tone selected: show facial scan corresponding to skin tone -->
+          @if (isDarkSkinSelected()) {
+            <img src="/image_4.jpg" alt="AI Shade Matching - Dark Tone Scan" class="shade-scan-img animate-fade" />
+          } @else {
+            <img src="/image_3.jpg" alt="AI Shade Matching - Light Tone Scan" class="shade-scan-img animate-fade" />
+          }
+          <!-- Tech HUD scanner ring overlay -->
+          <div class="scanner-hud-overlay">
+            <div class="scanner-radar"></div>
+            <span class="hud-status">ANALIZIRANJE TONA...</span>
+          </div>
+        } @else {
+          <!-- No tone selected: show intro hero image with foundation swatches -->
+          <img src="/image_5.jpg" alt="GlamShop Shade Matching" class="shade-intro-img animate-fade" />
+          <div class="visual-badge">
+            <span>PRECIZNO MATČOVANJE NIJANSI</span>
+          </div>
+        }
+      } @else {
+        <!-- Result computed: show matched face scan side -->
+        @if (isDarkSkinSelected()) {
+          <img src="/image_4.jpg" alt="AI Shade Matched" class="shade-scan-img animate-fade matched" />
+        } @else {
+          <img src="/image_3.jpg" alt="AI Shade Matched" class="shade-scan-img animate-fade matched" />
+        }
+        <div class="scanner-hud-overlay matched">
+          <div class="hud-success-box">
+            <span class="success-dot"></span> NIJANSA PRONAĐENA
+          </div>
+        </div>
+      }
     </div>
 
-    <div class="shade-content">
-      <!-- Leva strana - selekcija -->
-      <div class="shade-selector">
-        <div class="selector-section">
-          <h3>1. Odaberite ton kože</h3>
-          <div class="skin-tones">
-            <button
-              *ngFor="let tone of skinTones"
-              class="tone-btn"
-              [class.selected]="selectedTone === tone.value"
-              (click)="selectTone(tone)"
-              [style.background]="tone.color"
-              [title]="tone.label">
-            </button>
+    <!-- Right Column: Interactive Panel -->
+    <div class="shade-interactive-panel">
+      
+      <!-- Selection Step -->
+      @if (!result) {
+        <div class="selector-view animate-fade">
+          <div class="panel-header">
+            <span class="panel-tagline">AI Shade Finder</span>
+            <h1 class="panel-title">Pronađite Nijansu</h1>
+            <p class="panel-subtitle">Naša pametna tehnologija pronalazi idealan ton pudera na osnovu vaših jedinstvenih podtonova.</p>
           </div>
-          <p class="selected-label" *ngIf="selectedTone">{{ selectedToneName }}</p>
-        </div>
 
-        <div class="selector-section">
-          <h3>2. Odaberite podton</h3>
-          <div class="undertones">
-            <button
-              *ngFor="let undertone of undertones"
-              class="undertone-btn"
-              [class.selected]="selectedUndertone === undertone.value"
-              (click)="selectUndertone(undertone)">
-              <span class="undertone-dot" [style.background]="undertone.color"></span>
-              {{ undertone.label }}
-            </button>
-          </div>
-        </div>
-
-        <div class="selector-section">
-          <h3>3. Odaberite pokrivenost</h3>
-          <div class="coverage-options">
-            <button
-              *ngFor="let cov of coverageOptions"
-              class="coverage-btn"
-              [class.selected]="selectedCoverage === cov.value"
-              (click)="selectedCoverage = cov.value">
-              <span class="coverage-icon">{{ cov.icon }}</span>
-              <span class="coverage-label">{{ cov.label }}</span>
-              <span class="coverage-desc">{{ cov.desc }}</span>
-            </button>
-          </div>
-        </div>
-
-        <button
-          class="btn-primary find-btn"
-          (click)="findShade()"
-          [disabled]="!selectedTone || !selectedUndertone || !selectedCoverage">
-          🎨 Pronađi moju nijansu
-        </button>
-      </div>
-
-      <!-- Desna strana - rezultat -->
-      <div class="shade-result" *ngIf="result">
-        <div class="result-card">
-          <div class="result-swatch" [style.background]="result.color"></div>
-          <div class="result-info">
-            <span class="result-badge">Vaša nijansa</span>
-            <h2>{{ result.shade }}</h2>
-            <p class="result-desc">{{ result.description }}</p>
-
-            <div class="result-tags">
-              <span class="tag">{{ result.tone }}</span>
-              <span class="tag">{{ result.undertone }}</span>
-              <span class="tag">{{ result.coverage }}</span>
+          <!-- 1. Skin Tones -->
+          <div class="selector-section">
+            <h3 class="section-heading">1. Odaberite ton kože</h3>
+            <div class="skin-tones-grid">
+              @for (tone of skinTones; track tone.value) {
+                <button
+                  class="tone-swatch-btn"
+                  [class.selected]="selectedTone === tone.value"
+                  (click)="selectTone(tone)"
+                  [style.background]="tone.color"
+                  [title]="tone.label"
+                  [attr.aria-label]="tone.label">
+                </button>
+              }
             </div>
+            @if (selectedTone) {
+              <p class="selected-value-label">Odabrano: <span>{{ selectedToneName }}</span></p>
+            }
+          </div>
 
-            <div class="similar-shades">
-              <h4>Slične nijanse:</h4>
-              <div class="shades-row">
-                <div
-                  *ngFor="let shade of result.similar"
-                  class="shade-dot"
-                  [style.background]="shade.color"
-                  [title]="shade.name">
-                  <span class="shade-tooltip">{{ shade.name }}</span>
+          <!-- 2. Undertones -->
+          <div class="selector-section">
+            <h3 class="section-heading">2. Odaberite podton</h3>
+            <div class="undertone-pills-wrap">
+              @for (undertone of undertones; track undertone.value) {
+                <button
+                  class="undertone-pill-card"
+                  [class.selected]="selectedUndertone === undertone.value"
+                  (click)="selectUndertone(undertone)">
+                  <span class="undertone-color-dot" [style.background]="undertone.color"></span>
+                  <span class="undertone-title">{{ undertone.label }}</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- 3. Coverage -->
+          <div class="selector-section">
+            <h3 class="section-heading">3. Odaberite pokrivenost</h3>
+            <div class="coverage-grid-premium">
+              @for (cov of coverageOptions; track cov.value) {
+                <button
+                  class="coverage-card-premium"
+                  [class.selected]="selectedCoverage === cov.value"
+                  (click)="selectedCoverage = cov.value">
+                  
+                  <div class="coverage-icon-wrap">
+                    @switch (cov.value) {
+                      @case ('light') {
+                        <svg class="cov-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                          <circle cx="12" cy="12" r="9"/>
+                          <path d="M12 2v20M2 12h20"/>
+                        </svg>
+                      }
+                      @case ('medium') {
+                        <svg class="cov-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                          <path d="M12 2a10 10 0 100 20M12 2v20"/>
+                        </svg>
+                      }
+                      @case ('full') {
+                        <svg class="cov-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                          <circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity="0.15"/>
+                        </svg>
+                      }
+                    }
+                  </div>
+                  
+                  <div class="coverage-text-wrap">
+                    <span class="coverage-name">{{ cov.label }}</span>
+                    <span class="coverage-desc">{{ cov.desc }}</span>
+                  </div>
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Find Button -->
+          <button
+            class="btn-find-shade"
+            (click)="findShade()"
+            [disabled]="!selectedTone || !selectedUndertone || !selectedCoverage">
+            Pronađi moju nijansu →
+          </button>
+        </div>
+      }
+
+      <!-- Result View -->
+      @else {
+        <div class="result-view animate-fade">
+          <div class="panel-header">
+            <span class="panel-tagline">Rezultat Analize</span>
+            <h1 class="panel-title">Vaš Match</h1>
+          </div>
+
+          <div class="result-card-premium">
+            <div class="result-swatch-header" [style.background]="result.color">
+              <div class="swatch-reflection"></div>
+            </div>
+            
+            <div class="result-info-premium">
+              <span class="result-badge-label">PREPORUČENA NIJANSA PUDERA</span>
+              <h2 class="result-shade-name">{{ result.shade }}</h2>
+              <p class="result-shade-description">{{ result.description }}</p>
+
+              <div class="result-tags-row">
+                <span class="result-tag-pill">{{ result.tone }}</span>
+                <span class="result-tag-pill">{{ result.undertone }}</span>
+                <span class="result-tag-pill">{{ result.coverage }}</span>
+              </div>
+
+              <!-- Similar Shades -->
+              <div class="similar-shades-section">
+                <h4>Srodni Spektri</h4>
+                <div class="similar-shades-swatches">
+                  @for (shade of result.similar; track shade.name) {
+                    <div class="similar-swatch-wrap">
+                      <div 
+                        class="similar-swatch-color" 
+                        [style.background]="shade.color" 
+                        [title]="shade.name">
+                      </div>
+                      <span class="similar-swatch-name">{{ shade.name }}</span>
+                    </div>
+                  }
                 </div>
               </div>
+
+              <a routerLink="/products" [queryParams]="{categoryId: 3}" class="btn-shop-match">
+                Kupite Puder u Ovoj Nijansi
+              </a>
             </div>
-
-            <a routerLink="/products" [queryParams]="{categoryId: 3}" class="btn-primary shop-btn">
-              💄 Istraži šminku
-            </a>
           </div>
+
+          <button class="btn-shade-reset" (click)="reset()">
+            🔄 Pokušaj ponovo
+          </button>
         </div>
+      }
 
-        <button class="btn-secondary reset-btn" (click)="reset()">
-          🔄 Pokušaj ponovo
-        </button>
-      </div>
-
-      <div class="shade-placeholder" *ngIf="!result">
-        <div class="placeholder-icon">🎨</div>
-        <p>Odaberite opcije sa leve strane da pronađete vašu savršenu nijansu!</p>
-      </div>
     </div>
+
   </div>
 </div>

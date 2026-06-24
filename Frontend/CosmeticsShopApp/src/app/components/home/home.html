@@ -1,70 +1,294 @@
-<section class="hero">
-  <div class="container hero-inner">
-    <div class="hero-text animate-fade-in">
-      <h1>Otkrijte svoju <span class="highlight">savršenu</span> rutinu nege</h1>
-      <p>Premium kozmetika od vodećih svetskih brendova. Besplatna dostava za porudžbine iznad 3000 RSD.</p>
-      <div class="hero-buttons">
-        <a routerLink="/products" class="btn-primary">Istraži proizvode</a>
-        <a routerLink="/register" class="btn-secondary">Pridruži se</a>
-      </div>
-    </div>
-    <div class="hero-image animate-fade-in">
-      <div class="hero-blob">💄</div>
-    </div>
-  </div>
-</section>
+<!-- ══════════════════════════════════════════════════════════
+     GlamShop — Home Page Sections
+     Features · Categories · Best Sellers · Newsletter
+     ══════════════════════════════════════════════════════════ -->
 
-<section class="features">
+<!-- ── Hero Banner Carousel ──────────────────────────────── -->
+<app-hero-banner></app-hero-banner>
+
+<!-- ── Features / Trust Bar ──────────────────────────────── -->
+<section class="features" aria-label="Prednosti kupovine">
   <div class="container">
+
+    <div class="features-header">
+      <span class="section-label">Zašto GlamShop</span>
+      <h2 class="section-title">Elegancija na Svakom Koraku</h2>
+      <div class="divider-rose"></div>
+    </div>
+
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🚚</div>
-        <h3>Brza dostava</h3>
-        <p>Isporuka u roku od 2-3 radna dana na teritoriji Srbije</p>
+
+      <!-- Fast Shipping -->
+      <div class="feature-card" id="feature-shipping">
+        <div class="feature-icon-wrap">
+          <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="14" width="30" height="22" rx="2"/>
+            <path d="M33 18h6l6 8v10h-12V18z"/>
+            <circle cx="12" cy="38" r="3"/><circle cx="38" cy="38" r="3"/>
+            <path d="M3 22h30M15 14v22"/>
+          </svg>
+        </div>
+        <div class="feature-text">
+          <h3>Brza Dostava</h3>
+          <p>Isporuka u roku od 2–3 radna dana na teritoriji Srbije</p>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">✅</div>
-        <h3>Originalni proizvodi</h3>
-        <p>Garantujemo autentičnost svih proizvoda iz našeg asortimana</p>
+
+      <!-- Authentic Products -->
+      <div class="feature-card" id="feature-authentic">
+        <div class="feature-icon-wrap">
+          <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 4l4.5 8.5L39 14l-7.5 7.5 1.5 10.5L24 27l-9 5 1.5-10.5L9 14l10.5-1.5L24 4z"/>
+            <path d="M17 25l4 4 8-9" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <div class="feature-text">
+          <h3>Originalni Proizvodi</h3>
+          <p>Garantujemo autentičnost svih proizvoda iz našeg asortimana</p>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">💳</div>
-        <h3>Sigurno plaćanje</h3>
-        <p>Plaćanje karticom putem Stripe payment processora</p>
+
+      <!-- Secure Payment -->
+      <div class="feature-card" id="feature-payment">
+        <div class="feature-icon-wrap">
+          <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="12" width="40" height="28" rx="3"/>
+            <path d="M4 20h40M12 30h8M32 30h4"/>
+          </svg>
+        </div>
+        <div class="feature-text">
+          <h3>Sigurno Plaćanje</h3>
+          <p>Plaćanje karticom putem Stripe payment processora</p>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">↩️</div>
-        <h3>Lako vraćanje</h3>
-        <p>30 dana za povrat neotvorenih proizvoda bez pitanja</p>
+
+      <!-- Easy Returns -->
+      <div class="feature-card" id="feature-returns">
+        <div class="feature-icon-wrap">
+          <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 16A16 16 0 1124 8"/>
+            <path d="M8 6v10h10M24 18v8l5 3"/>
+          </svg>
+        </div>
+        <div class="feature-text">
+          <h3>Lako Vraćanje</h3>
+          <p>30 dana za povrat neotvorenih proizvoda bez pitanja</p>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<section class="categories">
+<!-- ── Categories ─────────────────────────────────────────── -->
+<section class="categories" aria-label="Kategorije proizvoda">
   <div class="container">
-    <h2 class="section-title">Kategorije</h2>
+
+    <div class="categories-header">
+      <span class="section-label">Naš Asortiman</span>
+      <h2 class="section-title">Istražite Kolekcije</h2>
+      <div class="divider-rose"></div>
+      <p class="section-subtitle">
+        Od delikatne nege lica do upečatljivih parfema — sve što vam je potrebno za vašu premium rutinu lepote.
+      </p>
+    </div>
+
     <div class="categories-grid">
-      <a routerLink="/products" [queryParams]="{categoryId: 1}" class="category-card">
-        <span class="category-icon">🧴</span>
-        <span>Nega lica</span>
+
+      <a routerLink="/products" [queryParams]="{categoryId: 1}" class="category-card" id="cat-face">
+        <div class="cat-thumb-wrapper">
+          <!-- swap <div> below with <img src="/assets/categories/face-care.jpg" class="cat-thumb-img" alt="Nega lica"> -->
+          <div class="cat-thumb cat-thumb--face" aria-hidden="true">
+            <svg class="cat-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 72 72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="36" cy="28" r="16"/>
+              <path d="M20 55c0-8.837 7.163-16 16-16s16 7.163 16 16"/>
+              <path d="M30 24c0 0 2 4 6 4s6-4 6-4M30 31c2 2 10 2 12 0"/>
+            </svg>
+          </div>
+          <div class="cat-thumb-ring"></div>
+        </div>
+        <span class="cat-name">Nega Lica</span>
+        <span class="cat-link-label">Istraži →</span>
       </a>
-      <a routerLink="/products" [queryParams]="{categoryId: 2}" class="category-card">
-        <span class="category-icon">🧖</span>
-        <span>Nega tela</span>
+
+      <a routerLink="/products" [queryParams]="{categoryId: 5}" class="category-card" id="cat-body">
+        <div class="cat-thumb-wrapper">
+          <!-- swap <div> below with <img src="/assets/categories/body-care.jpg" class="cat-thumb-img" alt="Nega tela"> -->
+          <div class="cat-thumb cat-thumb--body" aria-hidden="true">
+            <svg class="cat-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 72 72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M28 14c0-4.4 3.6-8 8-8s8 3.6 8 8v6h-16v-6z"/>
+              <path d="M20 20h32l4 36H16L20 20zM28 34c2 6 14 6 16 0"/>
+              <circle cx="36" cy="46" r="3"/>
+            </svg>
+          </div>
+          <div class="cat-thumb-ring"></div>
+        </div>
+        <span class="cat-name">Nega Tela</span>
+        <span class="cat-link-label">Istraži →</span>
       </a>
-      <a routerLink="/products" [queryParams]="{categoryId: 3}" class="category-card">
-        <span class="category-icon">💄</span>
-        <span>Šminka</span>
+
+      <a routerLink="/products" [queryParams]="{categoryId: 2}" class="category-card" id="cat-makeup">
+        <div class="cat-thumb-wrapper">
+          <!-- swap <div> below with <img src="/assets/categories/makeup.jpg" class="cat-thumb-img" alt="Šminka"> -->
+          <div class="cat-thumb cat-thumb--makeup" aria-hidden="true">
+            <svg class="cat-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 72 72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M36 8v4M28 12l2 3M44 12l-2 3"/>
+              <rect x="26" y="18" width="20" height="32" rx="10"/>
+              <path d="M26 30h20M30 50v6a4 4 0 008 0v-6M31 22h10"/>
+            </svg>
+          </div>
+          <div class="cat-thumb-ring"></div>
+        </div>
+        <span class="cat-name">Šminka</span>
+        <span class="cat-link-label">Istraži →</span>
       </a>
-      <a routerLink="/products" [queryParams]="{categoryId: 4}" class="category-card">
-        <span class="category-icon">🌸</span>
-        <span>Parfemi</span>
+
+      <a routerLink="/products" [queryParams]="{categoryId: 3}" class="category-card" id="cat-perfumes">
+        <div class="cat-thumb-wrapper">
+          <!-- swap <div> below with <img src="/assets/categories/perfumes.jpg" class="cat-thumb-img" alt="Parfemi"> -->
+          <div class="cat-thumb cat-thumb--perfume" aria-hidden="true">
+            <svg class="cat-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 72 72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="24" y="28" width="24" height="32" rx="6"/>
+              <rect x="30" y="20" width="12" height="10" rx="2"/>
+              <path d="M33 20v-4h6v4M28 40c4-4 12-4 16 0M30 50h12"/>
+            </svg>
+          </div>
+          <div class="cat-thumb-ring"></div>
+        </div>
+        <span class="cat-name">Parfemi</span>
+        <span class="cat-link-label">Istraži →</span>
       </a>
-      <a routerLink="/products" [queryParams]="{categoryId: 5}" class="category-card">
-        <span class="category-icon">💆</span>
-        <span>Nega kose</span>
+
+      <a routerLink="/products" [queryParams]="{categoryId: 4}" class="category-card" id="cat-hair">
+        <div class="cat-thumb-wrapper">
+          <!-- swap <div> below with <img src="/assets/categories/hair-care.jpg" class="cat-thumb-img" alt="Nega kose"> -->
+          <div class="cat-thumb cat-thumb--hair" aria-hidden="true">
+            <svg class="cat-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 72 72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 56c0-18 6-30 12-38M36 18c6 8 12 20 12 38"/>
+              <path d="M24 36c4-6 8-10 12-10s8 4 12 10M26 48c4-4 6-6 10-6s6 2 10 6"/>
+              <path d="M22 56h28" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="cat-thumb-ring"></div>
+        </div>
+        <span class="cat-name">Nega Kose</span>
+        <span class="cat-link-label">Istraži →</span>
       </a>
+
     </div>
   </div>
+</section>
+
+<section class="bestsellers" aria-label="Bestselleri">
+
+  <!-- Section Header -->
+  <div class="bestsellers-header">
+    <span class="section-label">Najnoviji</span>
+    <h2 class="bestsellers-title">Proizvodi</h2>
+    <a routerLink="/products" class="shop-all-btn" id="bestsellers-shop-all">
+      Pogledaj Sve
+    </a>
+  </div>
+
+  <!-- Carousel wrapper with arrows -->
+  <div class="bestsellers-carousel-wrap">
+
+    @if (products.length > 0) {
+      <!-- Prev Arrow -->
+      <button class="prod-arrow prod-arrow--prev" id="prod-prev" (click)="scrollProducts('left')" aria-label="Prethodni proizvodi">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <!-- Scrollable track -->
+      <div class="products-track" #productTrack>
+        @for (product of products; track product.id) {
+          <a [routerLink]="product.routerLink" class="product-card" [id]="'product-card-' + product.id">
+
+            <!-- Pastel background block + product image -->
+            <div class="product-img-block" [style.background]="product.cardBg">
+              <!--
+                Replace the SVG below with a real product image:
+                <img [src]="product.imagePlaceholder" [alt]="product.name" class="product-img">
+                Make sure product.imagePlaceholder is set to '/assets/products/...'
+              -->
+              <img 
+                [src]="product.imageUrl" 
+                [alt]="product.name" 
+                class="product-img"
+                (error)="$event.target['src'] = '/assets/placeholder.png'"
+              />
+
+              @if (product.isNew) {
+                <span class="product-badge">Novo</span>
+              }
+            </div>
+
+            <!-- Card text info -->
+            <div class="product-info">
+              <span class="product-category">{{ product.category }}</span>
+              <h3 class="product-name">{{ product.name }}</h3>
+              <span class="product-cta">Pogledaj →</span>
+            </div>
+
+          </a>
+        }
+      </div>
+
+      <!-- Next Arrow -->
+      <button class="prod-arrow prod-arrow--next" id="prod-next" (click)="scrollProducts('right')" aria-label="Sledeci proizvodi">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    } @else {
+      <p class="empty-state">Trenutno nema bestseler proizvoda.</p>
+    }
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NEWSLETTER / STAY IN THE KNOW — Full-Width Banner
+     Inspired by Maybelline aa5670, GlamShop rose-gold palette
+     ════════════════════════════════════════════════════════ -->
+<section class="newsletter-banner" aria-label="Newsletter prijava">
+  <!--
+    ── BACKGROUND IMAGE ──────────────────────────────────────────
+    To use a real photo, replace the background in newsletter-banner CSS:
+      background: url('/assets/newsletter-bg.jpg') center / cover no-repeat;
+    Then adjust --newsletter-overlay opacity as needed.
+    ─────────────────────────────────────────────────────────────
+  -->
+
+  <div class="newsletter-overlay"></div>
+
+  <div class="newsletter-content">
+    <span class="section-label newsletter-label">Ekskluzivno za Vas</span>
+    <h2 class="newsletter-title">Ostanite u Toku</h2>
+    <p class="newsletter-subtitle">
+      Prijavite se na naš newsletter i budite prvi koji saznaju o novim kolekcijama,<br>
+      beauty savetima i ekskluzivnim ponudama.
+    </p>
+
+    <div class="newsletter-form-row">
+      <input
+        type="email"
+        class="newsletter-input"
+        placeholder="Vaša email adresa"
+        id="newsletter-email"
+        aria-label="Email adresa za newsletter"
+      />
+      <button class="newsletter-submit btn-primary" id="newsletter-submit">
+        Prijavite se
+        <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <p class="newsletter-disclaimer">Vaša privatnost je zaštićena. Odjava u bilo kom trenutku.</p>
+  </div>
+
 </section>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth/auth';
@@ -12,10 +12,13 @@ import { Observable } from 'rxjs';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn$!: Observable<boolean>;
   isAdmin$!: Observable<boolean>;
   cartCount: number = 0;
+
+  /** True once the page has scrolled past the hero — triggers denser glass */
+  isScrolled: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -29,15 +32,22 @@ export class NavbarComponent implements OnInit {
         observer.next(role === 'Admin');
       });
     });
+    this.loadCartCount();
+    
+  }
 
-    if (this.authService.getToken() && localStorage.getItem('role') === 'Customer') {
-      this.loadCartCount();
-    }
+  ngOnDestroy(): void {
+    // No manual cleanup needed — HostListener is removed automatically
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.isScrolled = window.scrollY > 50;
   }
 
   loadCartCount(): void {
-    this.cartService.getCart().subscribe({
-      next: (res) => this.cartCount = res.items?.length || 0,
+    this.cartService.getCartItems$().subscribe({
+      next: (items) => this.cartCount = items.reduce((sum, item) => sum + item.quantity, 0),
       error: () => this.cartCount = 0
     });
   }

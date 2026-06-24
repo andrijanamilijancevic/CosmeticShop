@@ -1,41 +1,94 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h2>💄 Kreirajte nalog</h2>
-      <p>Pridružite se GlamShop zajednici</p>
+<div class="auth-page">
+  <div class="auth-split-container">
+    
+    <!-- Left Column: Full bleed visual storytelling -->
+    <div class="auth-visual-side" style="background-image: url('/image_22.jpg')">
+      <div class="visual-tint"></div>
+      <div class="visual-quote">
+        <span class="quote-tag">GLAM SHOP ZAJEDNICA</span>
+        <p class="quote-text">"Pridružite se svetu premium kozmetike i personalizovanih rituala lepote."</p>
+      </div>
     </div>
 
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Ime</label>
-          <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="Vaše ime" required/>
+    <!-- Right Column: Form side -->
+    <div class="auth-form-side">
+      <div class="form-wrapper">
+        <div class="auth-header">
+          <div class="logo-wrapper">
+            <img src="/logo.png" alt="GlamShop Logo" class="auth-logo" />
+          </div>
+          <h2>Registrujte se</h2>
+          <p>Pridružite se GlamShop zajednici</p>
         </div>
-        <div class="form-group">
-          <label>Prezime</label>
-          <input type="text" [(ngModel)]="lastName" name="lastName" placeholder="Vaše prezime" required/>
-        </div>
+
+        <form (ngSubmit)="onSubmit()" class="premium-form">
+          <div class="form-row-premium">
+            <div class="form-group-premium">
+              <input 
+                type="text" 
+                [(ngModel)]="firstName" 
+                name="firstName" 
+                id="reg-first-name"
+                placeholder="Vaše ime" 
+                required
+                class="premium-input"
+              />
+              <label for="reg-first-name" class="premium-label">Ime</label>
+            </div>
+            <div class="form-group-premium">
+              <input 
+                type="text" 
+                [(ngModel)]="lastName" 
+                name="lastName" 
+                id="reg-last-name"
+                placeholder="Vaše prezime" 
+                required
+                class="premium-input"
+              />
+              <label for="reg-last-name" class="premium-label">Prezime</label>
+            </div>
+          </div>
+
+          <div class="form-group-premium">
+            <input 
+              type="email" 
+              [(ngModel)]="email" 
+              name="email" 
+              id="reg-email"
+              placeholder="vas@email.com" 
+              required
+              class="premium-input"
+            />
+            <label for="reg-email" class="premium-label">Email</label>
+          </div>
+
+          <div class="form-group-premium">
+            <input 
+              type="password" 
+              [(ngModel)]="password" 
+              name="password" 
+              id="reg-password"
+              placeholder="••••••••" 
+              required
+              class="premium-input"
+            />
+            <label for="reg-password" class="premium-label">Lozinka</label>
+          </div>
+
+          @if (errorMsg) {
+            <div class="error-msg animate-fade">{{ errorMsg }}</div>
+          }
+
+          <button type="submit" class="btn-auth-submit" [disabled]="loading">
+            {{ loading ? 'Registracija...' : 'Registrujte se' }}
+          </button>
+        </form>
+
+        <p class="auth-footer">
+          Već imate nalog? <a routerLink="/login">Prijavite se</a>
+        </p>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" [(ngModel)]="email" name="email" placeholder="vas@email.com" required/>
-      </div>
-
-      <div class="form-group">
-        <label>Lozinka</label>
-        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required/>
-      </div>
-
-      <div class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</div>
-
-      <button type="submit" class="btn-primary" [disabled]="loading">
-        {{ loading ? 'Registracija...' : 'Registrujte se' }}
-      </button>
-    </form>
-
-    <p class="auth-footer">
-      Već imate nalog? <a routerLink="/login">Prijavite se</a>
-    </p>
   </div>
 </div>

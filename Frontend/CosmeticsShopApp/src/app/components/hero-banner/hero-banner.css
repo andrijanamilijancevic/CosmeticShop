@@ -1,76 +1,274 @@
-.hero-banner {
+/* ============================================================
+   Hero Banner — Full-Width Rotating Carousel
+   Maybelline-structure + Charlotte Tilbury-palette
+   Left-anchored bold text, no glass panel, edge-to-edge
+   ============================================================ */
+
+/* ── Carousel Shell — true edge-to-edge ─────────────────── */
+.carousel {
   position: relative;
-  min-height: 85vh;
+  width: 100vw;
+  margin-left: calc(-1 * ((100vw - 100%) / 2));  /* break out of any ancestor padding */
+  height: 88vh;
+  min-height: 560px;
+  max-height: 860px;
+  overflow: hidden;
+  margin-top: 0; /* promo banner + navbar handle the offset now */
+}
+
+/* ── Track & Slides ──────────────────────────────────────── */
+.carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /*
+   * Background is bound via [style.background-image] from the slide data.
+   * DomSanitizer.bypassSecurityTrustStyle() ensures url() is not stripped.
+   */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* ── DEBUG: remove this border once images are confirmed visible ── */
+  outline: 5px solid red;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.90s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0.90s;
+  will-change: opacity;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.90s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0s;
+}
+
+/* ── Overlay ─────────────────────────────────────────────── */
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /*
+   * Overlay is bound from slide data.
+   * For real photos use: linear-gradient(90deg, rgba(253,246,240,0.82) 0%, rgba(253,246,240,0.35) 55%, transparent 100%)
+   */
+}
+
+/* ── Content Wrapper — left-anchored, padded ─────────────── */
+.slide-content-wrapper {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
-  overflow: hidden;
-  margin-top: 70px; /* Space for fixed header */
+  padding: 0 6vw;            /* 6% of viewport from left edge */
+  z-index: 2;
 }
 
-.hero-image-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+/* ── Content — NO glass panel, direct text on gradient ────── */
+.slide-content {
+  max-width: 600px;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+
+  /* Stagger entry animation */
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.70s ease 0.30s,
+              transform 0.70s cubic-bezier(0.4, 0, 0.2, 1) 0.30s;
 }
 
-.hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.slide-content--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255,240,243,0.85) 0%, rgba(255,240,243,0.4) 50%, rgba(255,240,243,0.1) 100%);
-}
-
-.hero-content {
-  position: relative;
-  width: 100%;
-  z-index: 1;
-}
-
-.hero-text {
-  max-width: 550px;
-  padding: 40px;
-  border-radius: var(--border-radius);
-  animation-delay: 0.2s;
-}
-
-.hero-text h1 {
+/* ── Accent Label ────────────────────────────────────────── */
+.slide-accent {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--rose-dark);
   margin-bottom: 20px;
-  color: var(--dark-pink);
 }
 
-.hero-text p {
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-  color: var(--text-dark);
+/* ── Headline — Large, bold, impactful ───────────────────── */
+.slide-headline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3rem, 6vw, 5.2rem);
+  font-weight: 600;             /* bolder than before */
+  line-height: 1.02;
+  color: var(--text-deep);
+  letter-spacing: -0.01em;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  /* Soft shadow to lift text off background without a panel */
+  text-shadow: 0 2px 24px rgba(253, 246, 240, 0.9),
+               0 1px 4px  rgba(253, 246, 240, 0.6);
 }
 
-.hero-btn {
-  font-size: 1.1rem;
+.headline-line {
+  display: block;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider-rose {
+  display: none; /* cleaner without divider in the open layout */
+}
+
+/* ── Subtitle ────────────────────────────────────────────── */
+.slide-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-body);
+  line-height: 1.78;
+  margin-top: 18px;
+  margin-bottom: 34px;
+  max-width: 420px;
+  text-shadow: 0 1px 8px rgba(253, 246, 240, 0.85);
+}
+
+/* ── CTA Button ──────────────────────────────────────────── */
+.slide-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  /* Inherits .btn-primary from styles.css but override a few values */
+  background: var(--rose-dark);
+  color: var(--white);
   padding: 14px 36px;
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  transition: var(--transition);
 }
 
-@media (max-width: 768px) {
-  .hero-overlay {
-    background: rgba(255,240,243,0.7);
+.slide-cta:hover {
+  background: var(--text-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44, 24, 16, 0.30);
+  color: var(--white);
+}
+
+.btn-arrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.slide-cta:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ── Navigation Arrows ───────────────────────────────────── */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 147, 122, 0.40);
+  background: rgba(253, 246, 240, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text-deep);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.carousel-arrow svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.carousel-arrow:hover {
+  background: var(--rose-dark);
+  border-color: var(--rose-dark);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 6px 20px rgba(160, 97, 74, 0.28);
+}
+
+.carousel-arrow--prev { left: 24px; }
+.carousel-arrow--next { right: 24px; }
+
+/* ── Dot Indicators ──────────────────────────────────────── */
+.carousel-dots {
+  position: absolute;
+  bottom: 28px;
+  left: 6vw;           /* left-aligned to match content */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(160, 97, 74, 0.50);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  padding: 0;
+}
+
+.carousel-dot--active {
+  width: 30px;
+  border-radius: 3px;
+  background: var(--rose-dark);
+  border-color: var(--rose-dark);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .carousel { height: 76vh; min-height: 500px; }
+  .slide-headline { font-size: clamp(2.4rem, 7vw, 3.6rem); }
+  .carousel-arrow { display: none; }
+}
+
+@media (max-width: 640px) {
+  .carousel { height: 70vh; min-height: 460px; }
+
+  .slide-content-wrapper {
+    align-items: flex-end;
+    padding: 0 24px 68px;
   }
-  
-  .hero-text {
-    padding: 30px 20px;
-  }
-  
-  .hero-text h1 {
-    font-size: 2.5rem;
-  }
+
+  .slide-content { max-width: 100%; }
+  .slide-headline { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .slide-subtitle { font-size: 0.875rem; }
+
+  .carousel-dots { left: 24px; }
 }

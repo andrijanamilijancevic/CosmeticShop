@@ -1,0 +1,72 @@
+/* ============================================================
+   Promo Banner — thin dismissible top bar
+   Warm champagne-rose gradient, our luxury palette
+   ============================================================ */
+
+.promo-banner {
+  width: 100%;
+  background: linear-gradient(90deg, #c8937a 0%, #d4a890 35%, #c9a96e 65%, #c8937a 100%);
+  background-size: 200% 100%;
+  animation: shiftGradient 8s ease infinite;
+  position: relative;
+  z-index: 1100; /* above navbar */
+}
+
+@keyframes shiftGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.promo-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 6px 48px;
+  position: relative;
+}
+
+.promo-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff8f4;
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.promo-sparkle {
+  font-size: 0.55rem;
+  opacity: 0.75;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+
+.promo-dismiss {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 248, 244, 0.75);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  line-height: 1;
+  transition: color 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.promo-dismiss:hover {
+  color: #fff8f4;
+}
+
+@media (max-width: 600px) {
+  .promo-inner { padding: 7px 44px 7px 16px; }
+  .promo-text  { font-size: 0.62rem; letter-spacing: 0.10em; }
+}

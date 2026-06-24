@@ -16,6 +16,11 @@ export class ShadeFinderComponent {
   selectedCoverage = '';
   result: any = null;
 
+  isDarkSkinSelected(): boolean {
+    const darkTones = ['medium-tan', 'tan', 'deep', 'rich', 'ebony'];
+    return darkTones.includes(this.selectedTone);
+  }
+
   skinTones = [
     { value: 'porcelain', label: 'Porcelain', color: '#F5E6D3' },
     { value: 'fair', label: 'Fair', color: '#F0D5B8' },

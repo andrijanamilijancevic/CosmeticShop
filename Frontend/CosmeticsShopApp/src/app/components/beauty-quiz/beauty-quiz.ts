@@ -17,6 +17,14 @@ export class BeautyQuizComponent {
   skinProfile = { type: '', concern: '', routine: '' };
   recommendations: any[] = [];
 
+  quizImages: string[] = [
+    '/image_22.jpg',
+    '/image_20.jpg',
+    '/image_21.jpg',
+    '/image_22.jpg',
+    '/image_20.jpg'
+  ];
+
   questions = [
     {
       text: 'Kako bi opisali vaš tip kože?',

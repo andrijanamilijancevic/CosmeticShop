@@ -1,0 +1,17 @@
+@if (visible) {
+  <div class="promo-banner" role="banner" aria-label="Promotivna poruka">
+    <div class="promo-inner">
+      <p class="promo-text">
+        <span class="promo-sparkle" aria-hidden="true">✦</span>
+        Besplatna dostava za sve porudžbine iznad 3.000 RSD &nbsp;·&nbsp; Originalni brendovi, garantovano
+        <span class="promo-sparkle" aria-hidden="true">✦</span>
+      </p>
+      <button
+        class="promo-dismiss"
+        (click)="dismiss()"
+        aria-label="Zatvori poruku">
+        &#x2715;
+      </button>
+    </div>
+  </div>
+}

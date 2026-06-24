@@ -12,9 +12,9 @@
     <div class="wishlist-grid" *ngIf="!loading && items.length > 0">
       <div class="product-card" *ngFor="let item of items">
         <div class="product-image">
-          <img [src]="item.imageUrl || 'assets/placeholder.png'" [alt]="item.name"/>
-          <button class="remove-btn" (click)="removeFromWishlist(item.id)" title="Ukloni">♡</button>
-        </div>
+      <img [src]="item.imageUrl ? 'https://localhost:7298/images/' + item.imageUrl : '/assets/placeholder.png'"
+     (error)="$event.target.src = '/assets/placeholder.png'"
+     [alt]="item.name"/>        </div>
         <div class="product-info">
           <span class="product-category">{{ item.categoryName }}</span>
           <h3>{{ item.name }}</h3>

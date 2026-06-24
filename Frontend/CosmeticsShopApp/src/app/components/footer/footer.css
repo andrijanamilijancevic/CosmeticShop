@@ -1,119 +1,196 @@
+/* ============================================================
+   Footer — GlamShop Premium Soft Cream
+   Warm cream background, refined bronze text, rose-gold accents
+   ============================================================ */
+
+/* ── Shell ────────────────────────────────────────────────── */
 .footer {
-  background: pink;
-  border-top: 1px solid rgba(201, 168, 76, 0.2);
-  margin-top: 60px;
+  background: var(--cream);
+  border-top: 1px solid rgba(200, 147, 122, 0.25);
+  margin-top: 0;
+  color: var(--text-dark);
+  font-family: 'Inter', sans-serif;
 }
 
+/* ── Top Banner ───────────────────────────────────────────── */
 .footer-banner {
-  background: var(--gold);
-  padding: 10px 20px;
+  background: var(--rose-dark);
+  padding: 12px 24px;
   text-align: center;
 }
 
 .footer-banner p {
-  color: var(--bg-dark);
-  font-size: 0.85rem;
+  color: var(--white-warm);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   margin: 0;
 }
 
+/* ── Main Footer ──────────────────────────────────────────── */
 .footer-main {
-  padding: 60px 0;
+  padding: 72px 0 56px;
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1.5fr;
-  gap: 48px;
+  grid-template-columns: 1fr 1fr 1fr 1.6fr;
+  gap: 56px;
 }
 
+/* ── Column Headings ──────────────────────────────────────── */
 .footer-col h4,
 .footer-newsletter h4 {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-  margin-bottom: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rose-dark);
+  margin-bottom: 24px;
 }
 
+/* ── Links & Icons ───────────────────────────────────────── */
 .footer-col ul {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 13px;
 }
 
 .footer-col ul li a {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  color: var(--text-body);
+  font-size: 0.88rem;
+  font-family: 'Inter', sans-serif;
   transition: var(--transition);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .footer-col ul li a:hover {
-  color: var(--gold);
+  color: var(--rose-dark);
+  padding-left: 6px;
 }
 
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-icon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--rose-gold);
+  margin-right: 8px;
+  transition: transform 0.3s ease;
+}
+
+.footer-col ul li a:hover .footer-icon {
+  transform: scale(1.1);
+}
+
+/* ── Newsletter ───────────────────────────────────────────── */
 .footer-newsletter p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-  line-height: 1.6;
+  color: var(--text-light);
+  font-size: 0.875rem;
+  margin-bottom: 22px;
+  line-height: 1.72;
 }
 
 .newsletter-form {
   display: flex;
   gap: 0;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  border: 1px solid var(--rose-gold);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--white);
 }
 
 .newsletter-form input {
   flex: 1;
-  border-radius: 0 !important;
-  border-right: none !important;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  border-radius: 0;
+}
+
+.newsletter-form input::placeholder {
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
 }
 
 .newsletter-form .btn-primary {
   border-radius: 0;
-  padding: 12px 20px;
-  font-size: 0.75rem;
+  padding: 12px 24px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   white-space: nowrap;
+  background: var(--rose-gold);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.newsletter-form .btn-primary:hover {
+  background: var(--rose-dark);
+  transform: none;
+  box-shadow: none;
 }
 
 .newsletter-note {
-  color: var(--gold) !important;
-  font-size: 0.85rem;
-  margin-bottom: 20px;
+  color: var(--rose-dark) !important;
+  font-size: 0.82rem;
+  margin-bottom: 22px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
 }
 
+/* ── Social Buttons ───────────────────────────────────────── */
 .social-links {
   display: flex;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .social-btn {
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--border-gold);
-  border-radius: 2px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--rose-gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  font-weight: 600;
+  color: var(--rose-gold);
   transition: var(--transition);
 }
 
 .social-btn:hover {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--rose-dark);
+  color: var(--white);
+  background: var(--rose-gold);
+  transform: translateY(-2px);
 }
 
+.social-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+/* ── Bottom Bar ───────────────────────────────────────────── */
 .footer-bottom {
-  border-top: 1px solid var(--border);
-  padding: 20px 0;
+  border-top: 1px solid rgba(200, 147, 122, 0.25);
+  padding: 24px 0;
+  background: var(--ivory);
 }
 
 .footer-bottom-inner {
@@ -123,17 +200,49 @@
 }
 
 .footer-bottom p {
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  color: var(--text-light);
+  font-size: 0.78rem;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.06em;
   margin: 0;
 }
 
 .payment-methods {
   display: flex;
   gap: 16px;
+  align-items: center;
 }
 
-.payment-methods span {
-  color: var(--text-muted);
-  font-size: 0.85rem;
+.payment-icon {
+  width: 36px;
+  height: 24px;
+  color: var(--rose-gold);
+  vertical-align: middle;
+  transition: var(--transition);
+}
+
+.payment-methods span:hover .payment-icon {
+  color: var(--rose-dark);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-main { padding: 48px 0 40px; }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .footer-bottom-inner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
 }

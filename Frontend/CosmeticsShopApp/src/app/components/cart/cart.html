@@ -12,7 +12,9 @@
     <div class="cart-content" *ngIf="!loading && cartItems.length > 0">
       <div class="cart-items">
         <div class="cart-item" *ngFor="let item of cartItems">
-          <img [src]="item.imageUrl || 'assets/placeholder.png'" [alt]="item.productName"/>
+      <img [src]="item.imageUrl ? 'https://localhost:7298/images/' + item.imageUrl : '/assets/placeholder.png'" 
+        class="product-img" 
+          [alt]="item.name" />          
           <div class="item-info">
             <h3>{{ item.productName }}</h3>
             <span class="item-price">{{ item.unitPrice | number }} RSD</span>

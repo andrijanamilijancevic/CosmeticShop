@@ -15,7 +15,7 @@
 
   <main class="admin-main">
     <div class="admin-header">
-      <h2>💄 Upravljanje proizvodima</h2>
+      <h2>Upravljanje proizvodima</h2>
       <button class="btn-primary" (click)="openForm()">+ Novi proizvod</button>
     </div>
 
@@ -87,7 +87,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let p of products">
-            <td><img [src]="p.imageUrl || 'assets/placeholder.png'" class="product-thumb"/></td>
+            <td>
+              <img [src]="p.imageUrl ? 'https://localhost:7298/images/' + p.imageUrl : '/assets/placeholder.png'" 
+                class="product-thumb" 
+                alt="Proizvod"/>
+              </td>            
             <td>{{ p.name }}</td>
             <td>{{ p.brand }}</td>
             <td>{{ p.categoryName }}</td>

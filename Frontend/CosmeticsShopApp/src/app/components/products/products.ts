@@ -28,6 +28,10 @@ export class ProductsComponent implements OnInit {
   loading = false;
   toastMsg = '';
 
+  get pagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
@@ -93,9 +97,9 @@ export class ProductsComponent implements OnInit {
       this.showToast('Morate biti prijavljeni da biste dodali u korpu!');
       return;
     }
-    this.cartService.addToCart(product.id, 1).subscribe({
+    this.cartService.addToCart(product, 1).subscribe({
       next: () => this.showToast(`${product.name} dodat u korpu! 🛒`),
-      error: (err) => this.showToast(err.error || 'Greška!')
+      error: () => this.showToast('Greška!')
     });
   }
 
@@ -125,7 +129,7 @@ export class ProductsComponent implements OnInit {
 }
 
   onImgError(event: any): void {
-    event.target.src = 'assets/placeholder.png';
+    event.target.src = '/assets/placeholder.png';
   }
 
   showToast(msg: string): void {

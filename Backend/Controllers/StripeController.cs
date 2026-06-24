@@ -25,6 +25,7 @@ namespace CosmeticsShop.Controllers
             int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
         // POST: api/Stripe/create-checkout-session
+        // POST: api/Stripe/create-checkout-session
         [HttpPost("create-checkout-session")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CreateCheckoutSession([FromBody] int orderId)
@@ -48,6 +49,7 @@ namespace CosmeticsShop.Controllers
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {
                         Name = oi.Product.Name,
+                        // Stripe neće videti localhost slike, ovo će proraditi tek kad okačiš sajt na pravi domen!
                         Images = new List<string> { oi.Product.ImageUrl }
                     },
                     UnitAmount = (long)(oi.UnitPrice * 100)
@@ -63,11 +65,36 @@ namespace CosmeticsShop.Controllers
                 SuccessUrl = "http://localhost:4200/order-success?orderId=" + orderId,
                 CancelUrl = "http://localhost:4200/cart",
                 Metadata = new Dictionary<string, string>
-                {
-                    { "orderId", orderId.ToString() },
-                    { "userId", GetUserId().ToString() }
-                }
+        {
+            { "orderId", orderId.ToString() },
+            { "userId", GetUserId().ToString() }
+        }
             };
+
+            // ---- DODATAK ZA KUPON: CITA BAZU I JAVLJA STRIPE-U ----
+            if (!string.IsNullOrEmpty(order.CouponCode))
+            {
+                var dbCoupon = await _context.Coupons.FirstOrDefaultAsync(c => c.Code == order.CouponCode);
+                if (dbCoupon != null)
+                {
+                    // 1. Pravimo kupon direktno na Stripe serveru "u letu"
+                    var couponOptions = new CouponCreateOptions
+                    {
+                        PercentOff = dbCoupon.DiscountPercent,
+                        Duration = "once", // Važi samo za ovo jedno plaćanje
+                        Name = dbCoupon.Code
+                    };
+                    var couponService = new CouponService();
+                    var stripeCoupon = await couponService.CreateAsync(couponOptions);
+
+                    // 2. Dodajemo taj kupon u ovu sesiju plaćanja
+                    options.Discounts = new List<SessionDiscountOptions>
+            {
+                new SessionDiscountOptions { Coupon = stripeCoupon.Id }
+            };
+                }
+            }
+            // -------------------------------------------------------
 
             var service = new SessionService();
             var session = await service.CreateAsync(options);
@@ -75,6 +102,7 @@ namespace CosmeticsShop.Controllers
             return Ok(new { sessionUrl = session.Url });
         }
 
+        // POST: api/Stripe/webhook
         // POST: api/Stripe/webhook
         [HttpPost("webhook")]
         public async Task<IActionResult> Webhook()
@@ -85,40 +113,44 @@ namespace CosmeticsShop.Controllers
             try
             {
                 StripeConfiguration.ApiKey = _configuration["StripeSettings:SecretKey"];
-
                 Event stripeEvent;
 
                 if (!string.IsNullOrEmpty(webhookSecret))
                 {
                     var signature = Request.Headers["Stripe-Signature"];
-                    stripeEvent = EventUtility.ConstructEvent(json, signature, webhookSecret);
+
+                    // OVO JE KLJUČNA PROMENA: Dodajemo throwOnApiVersionMismatch: false
+                    stripeEvent = EventUtility.ConstructEvent(json, signature, webhookSecret, throwOnApiVersionMismatch: false);
                 }
                 else
                 {
-                    stripeEvent = EventUtility.ParseEvent(json);
+                    // I ovde, za svaki slučaj
+                    stripeEvent = EventUtility.ParseEvent(json, throwOnApiVersionMismatch: false);
                 }
 
                 if (stripeEvent.Type == "checkout.session.completed")
                 {
                     var session = stripeEvent.Data.Object as Session;
-                    if (session == null) return BadRequest();
-
-                    var orderId = int.Parse(session.Metadata["orderId"]);
-
-                    var order = await _context.Orders.FindAsync(orderId);
-                    if (order != null)
+                    if (session != null && session.Metadata != null && session.Metadata.ContainsKey("orderId"))
                     {
-                        order.Status = "Paid";
-                        order.StripePaymentId = session.PaymentIntentId;
-                        await _context.SaveChangesAsync();
+                        var orderId = int.Parse(session.Metadata["orderId"]);
+                        var order = await _context.Orders.FindAsync(orderId);
+
+                        if (order != null)
+                        {
+                            order.Status = "Paid";
+                            order.StripePaymentId = session.PaymentIntentId;
+                            await _context.SaveChangesAsync();
+                            Console.WriteLine($"[USPEH] Porudžbina {orderId} je plaćena!");
+                        }
                     }
                 }
-
                 return Ok();
             }
             catch (StripeException ex)
             {
-                return BadRequest($"Webhook greška: {ex.Message}");
+                Console.WriteLine($"Greška: {ex.Message}");
+                return BadRequest(ex.Message);
             }
         }
 

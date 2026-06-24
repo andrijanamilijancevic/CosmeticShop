@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart';
 import { OrderService } from '../../services/order';
+import { HttpClient } from '@angular/common/http'; 
 
 @Component({
   selector: 'app-cart',
@@ -23,6 +24,7 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
+    private http: HttpClient,
     private router: Router
   ) {}
 
@@ -60,10 +62,22 @@ export class CartComponent implements OnInit {
     });
   }
 
-  applyCoupon(): void {
-    if (!this.couponCode) return;
-    this.couponMsg = 'Kupon će biti primenjen pri kreiranju porudžbine.';
-  }
+ applyCoupon() {
+  if (!this.couponCode) return;
+
+  this.http.get(`https://localhost:7298/api/Coupons/validate/${this.couponCode}`)
+    .subscribe({
+      next: (response: any) => {
+        // response.discountPercent ti dolazi iz tvog DTO-a
+        const discount = response.discountPercent;
+        this.totalAmount = this.totalAmount - (this.totalAmount * (discount / 100));
+        this.couponMsg = `Kupon primenjen! Popust: ${discount}%`;
+      },
+      error: () => {
+        this.couponMsg = "Nevažeći kupon ili je istekao.";
+      }
+    });
+}
 
   checkout(): void {
     this.orderService.createOrder(this.couponCode || undefined).subscribe({

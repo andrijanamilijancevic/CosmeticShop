@@ -4,9 +4,11 @@
 
     <div class="detail-grid">
       <div class="detail-image">
-        <img [src]="product.imageUrl || 'assets/placeholder.png'" [alt]="product.name"/>
+        <img [src]="product.imageUrl ? 'https://localhost:7298/images/' + product.imageUrl : '/assets/placeholder.png'" 
+          (error)="$event.target.src = '/assets/placeholder.png'"
+            [alt]="product.name"/>
       </div>
-
+      
       <div class="detail-info">
         <span class="product-category">{{ product.categoryName }}</span>
         <h1>{{ product.name }}</h1>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductService } from '../../services/product/product';
 import { CartService } from '../../services/cart/cart';
@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -57,15 +57,14 @@ export class ProductDetailComponent implements OnInit {
       next: (res) => this.reviews = res
     });
   }
-
   addToCart(): void {
     if (!this.isLoggedIn) {
       this.showToast('Morate biti prijavljeni!');
       return;
     }
-    this.cartService.addToCart(this.product.id, this.quantity).subscribe({
+    this.cartService.addToCart(this.product, this.quantity).subscribe({
       next: () => this.showToast('Dodato u korpu! 🛒'),
-      error: (err) => this.showToast(err.error || 'Greška!')
+      error: () => this.showToast('Greška!')
     });
   }
 

@@ -51,16 +51,16 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
-    this.http.put(`${this.apiUrl}/me`, this.editForm).subscribe({
-      next: () => this.showToast('Profil ažuriran!'),
-      error: () => this.showToast('Greška!')
+    this.http.put(`${this.apiUrl}/me`, this.editForm, { responseType: 'text' }).subscribe({
+      next: (res) => this.showToast(res || 'Profil ažuriran!'),
+      error: () => this.showToast('Greška pri ažuriranju!')
     });
   }
 
   changePassword(): void {
-    this.http.put(`${this.apiUrl}/me/password`, this.passwordForm).subscribe({
-      next: () => {
-        this.showToast('Lozinka promenjena!');
+   this.http.put(`${this.apiUrl}/me/password`, this.passwordForm, { responseType: 'text' }).subscribe({
+      next: (res) => {
+        this.showToast(res || 'Lozinka promenjena!');
         this.passwordForm = { oldPassword: '', newPassword: '' };
       },
       error: (err) => this.showToast(err.error || 'Greška!')
